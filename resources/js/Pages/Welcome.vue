@@ -26,7 +26,7 @@ defineProps({
             <h1 class="text-white text-4xl font-semibold mb-4 uppercase relative">
                 <span class="text-gradient bg-gradient-to-r from-white to-green-300 bg-clip-text text-transparent">Point of Sale System</span>
             </h1>
-            <p class="text-blue-200 text-xl mx-auto border-2 border-yellow-400 rounded-md p-4 shadow-lg">
+            <p class="text-blue-300 text-xl mx-auto border-2 border-yellow-400 rounded-md p-4 shadow-lg">
                 A Point of Sale (POS) system is a crucial tool for retail and hospitality businesses, facilitating efficient transactions, inventory management, and sales analysis. It streamlines checkout, enhances customer service, and provides valuable insights for decision-making. POS systems optimize operations, improve inventory control, and boost revenue while ensuring secure payment processing and compliance with industry standards. In summary, POS systems are essential for businesses to streamline operations, improve customer experience, and drive growth.
             </p>
         </div>
