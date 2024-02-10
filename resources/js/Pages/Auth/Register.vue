@@ -9,8 +9,15 @@ import { Head, Link, useForm } from '@inertiajs/vue3';
 const form = useForm({
     name: '',
     email: '',
+    phone: '',
+    address: '',
+    position_id : '',
     password: '',
     password_confirmation: '',
+});
+
+defineProps({
+    positions : Object,
 });
 
 const submit = () => {
@@ -54,6 +61,53 @@ const submit = () => {
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="phone" value="Phone No." />
+
+                <TextInput
+                    id="phone"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.phone"
+                    required
+                    autocomplete="phone"
+                />
+
+                <InputError class="mt-2" :message="form.errors.phone" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="address" value="Address" />
+
+                <TextInput
+                    id="address"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.address"
+                    required
+                    autocomplete="address"
+                />
+
+                <InputError class="mt-2" :message="form.errors.address" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="position_id" value="Position" />
+
+                <select
+                    class="border-gray-300 mt-1 block w-full dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                    id="position"
+                    v-model="form.position_id"
+                    required
+                    autocomplete="position_id"
+                >
+                    <option value="">Choose your position...</option>
+                    <option v-for="position in positions" :value="position.id" :key="position.id">{{ position.name }}</option>
+                </select>
+
+                <InputError class="mt-2" :message="form.errors.position_id" />
             </div>
 
             <div class="mt-4">

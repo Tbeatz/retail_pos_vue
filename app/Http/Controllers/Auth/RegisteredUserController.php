@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Position;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -21,7 +22,9 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        return Inertia::render('Auth/Register', [
+            'positions' => Position::all(),
+        ]);
     }
 
     /**
@@ -35,11 +38,18 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'address' => 'required|string',
+            'phone' => 'required',
+            'position_id' => 'required',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'position_id' => $request->position_id,
+            'role_id' => 2, //user
             'password' => Hash::make($request->password),
         ]);
 
