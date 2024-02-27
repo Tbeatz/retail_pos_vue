@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 /*
@@ -31,8 +33,16 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    //files
+    Route::get('/file/{path}', function ($path) {
+        if (Storage::path('upload/'.$path)) {
+            return response()->file(Storage::path('upload/'.$path));
+        } else {
+            abort(404, 'File Not Found');
+        }
+    })->name('file')->where('path', '.*');
 });
 
 require __DIR__.'/auth.php';

@@ -5,7 +5,7 @@ import { Link } from '@inertiajs/vue3';
 const props = defineProps({
     href: {
         type: String,
-        required: true,
+        default: '#',
     },
     active: {
         type: Boolean,
@@ -14,8 +14,8 @@ const props = defineProps({
 
 const classes = computed(() =>
     props.active
-        ? 'inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 dark:border-indigo-600 text-sm font-medium leading-5 text-gray-900 dark:text-gray-100 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out'
-        : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 focus:border-gray-300 dark:focus:border-gray-700 transition duration-150 ease-in-out'
+        ? 'text-white border border-transparent bg-blue-500 hover:bg-white hover:text-blue-500 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2 text-center inline-flex items-center dark:border-transparent dark:text-gray-200 dark:hover:text-blue-600 dark:focus:ring-blue-800 dark:hover:bg-white dark:hover:text-blue-600 shadow-md shadow-gray-500 dark:shadow-purple-500 hover:shadow-blue-500 dark:hover:shadow-gray-500'
+        : 'text-blue-500 border border-transparent hover:bg-blue-500 hover:text-white focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2 text-center inline-flex items-center dark:border-transparent dark:text-blue-600 dark:hover:text-gray-200 dark:focus:ring-blue-800 dark:hover:bg-blue-600 shadow-md shadow-blue-500 dark:shadow-gray-500 hover:shadow-gray-500 dark:hover:shadow-purple-500'
 );
 </script>
 

@@ -111,7 +111,7 @@ const submit = () => {
                     <InputLabel for="position_id" value="Position" />
                     <SelectInput
                         v-model="form.position_id"
-                        require
+                        required
                         id="position_id"
                         :value="positions"
                         nameProp="name"/>

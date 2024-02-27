@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Position;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -20,6 +23,7 @@ class ProfileController extends Controller
     {
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'positions' => Position::get(),
             'status' => session('status'),
         ]);
     }
@@ -29,15 +33,25 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        if ($request->avatar) {
+            $path = Storage::disk('upload')->put('avatars', $request->avatar);
+            $old = $request->user()->avatar;
+            if ($old) {
+                Storage::disk('upload')->delete($old);
+            }
+        } else {
+            $path = $request->user()->avatar;
+        }
+        $validatedData = $request->validated();
+        $validatedData['avatar'] = $path;
+        $request->user()->fill($validatedData);
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
-
         $request->user()->save();
 
-        return Redirect::route('profile.edit');
+        return to_route('profile.edit');
     }
 
     /**

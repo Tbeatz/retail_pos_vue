@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('avatar')->nullable();
             $table->foreignIdFor(Role::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Position::class)->nullable()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Business::class)->nullable()->constrained()->cascadeOnDelete();
