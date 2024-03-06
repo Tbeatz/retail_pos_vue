@@ -4,6 +4,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SelectInput from '@/Components/SelectInput.vue';
 import TextInput from '@/Components/TextInput.vue';
+import ValidateTransition from '@/Transitions/ValidateTransition.vue';
 import { Link, useForm, usePage, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
@@ -31,6 +32,7 @@ const form = useForm({
 });
 
 function upload(e){
+    form.clearErrors('avatar');
     form.avatar = e.target.files[0];
     preview_url.value = URL.createObjectURL(form.avatar);
 }
@@ -60,81 +62,106 @@ function form_submit(){
             <img class="w-20 h-20 rounded-full shadow-md dark:shadow-blue-600 shadow-blue-500" :src="preview_url ? preview_url : (form.avatar ? 'file/' + form.avatar : 'style_images/user.png')" alt="">
             <div class="flex flex-col gap-2 items-start">
                 <div class="w-1/2">
-                    <InputLabel for="avatar" value="Avatar" />
+                    <div class="flex items-center gap-1">
+                        <InputLabel for="avatar" value="Avatar" />
+                        <ValidateTransition>
+                            <InputError :message="form.errors.avatar" />
+                        </ValidateTransition>
+                    </div>
                     <input accept=".jpg, .png" @input="upload" class="block w-full mt-1 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white dark:text-gray-200 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file">
-                    <InputError class="mt-2" :message="form.errors.avatar" />
                 </div>
             </div>
             <div class="flex flex-row gap-2 items-center justify-center">
                 <div class="w-1/2">
-                    <InputLabel for="name" value="Name" />
+                    <div class="flex items-center gap-1">
+                        <InputLabel for="name" value="Name" />
+                        <ValidateTransition>
+                            <InputError :message="form.errors.name" />
+                        </ValidateTransition>
+                    </div>
                     <TextInput
                         id="name"
                         type="text"
                         class="mt-1 block w-full"
+                        @input="form.clearErrors('name')"
                         v-model="form.name"
                         required
                         autocomplete="name"
                     />
-                    <InputError class="mt-2" :message="form.errors.name" />
                 </div>
                 <div class="w-1/2">
-                    <InputLabel for="email" value="Email" />
+                    <div class="flex items-center gap-1">
+                        <InputLabel for="email" value="Email" />
+                        <ValidateTransition>
+                            <InputError :message="form.errors.email" />
+                        </ValidateTransition>
+                    </div>
                     <TextInput
                         id="email"
                         type="email"
                         class="mt-1 block w-full"
+                        @input="form.clearErrors('email')"
                         v-model="form.email"
                         required
                         autocomplete="username"
                     />
-                    <InputError class="mt-2" :message="form.errors.email" />
                 </div>
             </div>
 
             <div class="flex flex-row gap-2 items-center justify-center">
                 <div class="w-1/2">
-                    <InputLabel for="position_id" value="Position" />
+                    <div class="flex items-center gap-1">
+                        <InputLabel for="position_id" value="Position" />
+                        <ValidateTransition>
+                            <InputError :message="form.errors.position_id" />
+                        </ValidateTransition>
+                    </div>
                     <SelectInput
                         id="position_id"
+                        @input="form.clearErrors('position_id')"
                         v-model="form.position_id"
                         :value="positions"
                         nameProp="name"
                         disabled
                         autocomplete="position_id"
                     />
-                    <InputError class="mt-2" :message="form.errors.position_id" />
                 </div>
                 <div class="w-1/2">
-                    <InputLabel for="phone" value="Phone" />
+                    <div class="flex items-center gap-1">
+                        <InputLabel for="phone" value="Phone" />
+                        <ValidateTransition>
+                            <InputError :message="form.errors.phone" />
+                        </ValidateTransition>
+                    </div>
                     <TextInput
                         id="phone"
                         type="text"
                         class="mt-1 block w-full"
+                        @input="form.clearErrors('phone')"
                         v-model="form.phone"
                         required
                         autocomplete="phone"
                     />
-                    <InputError class="mt-2" :message="form.errors.phone" />
                 </div>
             </div>
 
             <div class="w-1/2">
-                <InputLabel for="address" value="Address" />
-
+                <div class="flex items-center gap-1">
+                    <InputLabel for="address" value="Address" />
+                    <ValidateTransition>
+                        <InputError :message="form.errors.address" />
+                    </ValidateTransition>
+                </div>
                 <TextInput
                     id="address"
                     type="text"
                     class="mt-1 block w-full"
+                    @input="form.clearErrors('address')"
                     v-model="form.address"
                     required
                     autocomplete="address"
                 />
-
-                <InputError class="mt-2" :message="form.errors.address" />
             </div>
-
-
 
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
                 <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">

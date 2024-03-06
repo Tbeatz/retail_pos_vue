@@ -147,7 +147,7 @@ onUnmounted(() => {
                     <template v-slot:trigger>
                         <span class="inline-flex rounded-md">
                             <button type="button"
-                                :class="route().current('profile.edit')
+                                :class="(route().current('profile.edit') || route().current('currency_type.index'))
                                 ? 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-white bg-blue-500 dark:bg-blue-600 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'
                                 : 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-gray-100 bg-purple-600 dark:bg-purple-700 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'">
                                 Miscellaneous
@@ -159,7 +159,7 @@ onUnmounted(() => {
                         </span>
                     </template>
                     <template #content>
-                        <DropdownLink :href="route('profile.edit')" :active="route().current('profile.edit')"> Currency Type </DropdownLink>
+                        <DropdownLink :href="route('currency_type.index')" :active="route().current('currency_type.index')"> Currency Type </DropdownLink>
                         <DropdownLink :href="route('profile.edit')" :active="route().current('profile.edit')"> Unit </DropdownLink>
                     </template>
                 </Dropdown>
@@ -184,6 +184,7 @@ onUnmounted(() => {
 
                         <template #content>
                             <DropdownLink :href="route('profile.edit')" :active="route().current('profile.edit')"> Profile </DropdownLink>
+                            <DropdownLink :href="route('profile.password')" :active="route().current('profile.password')"> Change Password </DropdownLink>
                             <DropdownLink :href="route('logout')" method="post" as="button">
                                 Log Out
                             </DropdownLink>
@@ -264,7 +265,7 @@ onUnmounted(() => {
                 </ResponsiveNavLink>
             </div>
             <div class="pt-2 pb-3 space-y-1 border-t border-gray-200 dark:border-gray-600">
-                <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
+                <ResponsiveNavLink :href="route('currency_type.index')" :active="route().current('currency_type.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
                    Currency Type
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">

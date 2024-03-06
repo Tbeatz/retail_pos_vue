@@ -25,6 +25,15 @@ class ProfileController extends Controller
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'positions' => Position::get(),
             'status' => session('status'),
+            'session' => 'profile',
+        ]);
+    }
+
+    public function password(Request $request): Response
+    {
+        return Inertia::render('Profile/Edit', [
+            'status' => session('status'),
+            'section' => 'password',
         ]);
     }
 
@@ -34,10 +43,14 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         if ($request->avatar) {
-            $path = Storage::disk('upload')->put('avatars', $request->avatar);
-            $old = $request->user()->avatar;
-            if ($old) {
-                Storage::disk('upload')->delete($old);
+            if ($request->avatar != $request->user()->avatar) {
+                $path = Storage::disk('upload')->put('avatars', $request->avatar);
+                $old = $request->user()->avatar;
+                if ($old) {
+                    Storage::disk('upload')->delete($old);
+                }
+            } else {
+                $path = $request->avatar;
             }
         } else {
             $path = $request->user()->avatar;

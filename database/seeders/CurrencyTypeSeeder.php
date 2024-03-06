@@ -17,5 +17,13 @@ class CurrencyTypeSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         CurrencyType::truncate();
         Schema::enableForeignKeyConstraints();
+
+        CurrencyType::create([
+            'name' => 'USD',
+        ]);
+
+        CurrencyType::create([
+            'name' => 'MMK',
+        ]);
     }
 }

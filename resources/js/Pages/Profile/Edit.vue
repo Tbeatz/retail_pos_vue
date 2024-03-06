@@ -15,6 +15,9 @@ defineProps({
     positions: {
         type: Array,
     },
+    session: {
+        type: String,
+    },
 });
 </script>
 
@@ -28,7 +31,7 @@ defineProps({
 
         <div class="w-96 h-60 rounded-lg flex-shrink-0 flex-grow">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg" v-if="session == 'profile'">
                     <UpdateProfileInformationForm
                         :must-verify-email="mustVerifyEmail"
                         :status="status"
@@ -37,8 +40,8 @@ defineProps({
                     />
                 </div>
 
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                    <UpdatePasswordForm class="max-w-xl" />
+                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg" v-else>
+                    <UpdatePasswordForm class="max-w-xl"/>
                 </div>
 
                 <!-- <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
