@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import CreateUpdateModal from './Modal/CreateUpdateModal.vue';
 import ModalTransition from '@/Transitions/ModalTransition.vue';
 import { Head, router, usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import ConfirmModal from '@/Components/ConfirmModal.vue';
 import AlertTransition from '@/Transitions/AlertTransition.vue';
 
@@ -12,6 +12,7 @@ const confirm_modal_open = ref(false);
 const state = ref('');
 const currency_type = ref(null);
 const page = usePage();
+const search = ref('');
 
 const props = defineProps({
     currency_types: Object,
@@ -52,8 +53,14 @@ function currency_type_del(id){
             }, 3000);
         }
     });
-
 }
+
+//search
+const filteredCurrencyTypes = computed(() => {
+    return props.currency_types.filter((c_type) => {
+        return c_type.name.toLowerCase().includes(search.value.toLowerCase());
+    });
+})
 
 </script>
 <template>
@@ -79,7 +86,7 @@ function currency_type_del(id){
                                             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                                         </svg>
                                     </div>
-                                    <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required="">
+                                    <input type="text" v-model="search" id="currency_type_search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search">
                                 </div>
                             </form>
                         </div>
@@ -108,7 +115,7 @@ function currency_type_del(id){
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(currency_type, index) in currency_types" class="text-center border-b dark:border-gray-700" :key="currency_type.id">
+                                <tr v-for="(currency_type, index) in filteredCurrencyTypes" class="text-center border-b dark:border-gray-700" :key="currency_type.id">
                                     <td class="w-4 p-4">
                                         <div class="flex items-center">
                                             <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
