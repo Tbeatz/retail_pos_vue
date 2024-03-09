@@ -12,9 +12,11 @@ class CurrencyTypeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $currency_types = CurrencyType::get();
+        $currency_types = CurrencyType::when($request->search_item, function($q, $v){
+            return $q->where('name', 'LIKE', '%'. $v .'%');
+        })->paginate(10);
         return Inertia::render('CurrencyType/CurrencyType', [
             'currency_types' => $currency_types,
         ]);

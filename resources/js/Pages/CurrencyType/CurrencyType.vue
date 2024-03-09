@@ -3,16 +3,18 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import CreateUpdateModal from './Modal/CreateUpdateModal.vue';
 import ModalTransition from '@/Transitions/ModalTransition.vue';
 import { Head, router, usePage } from '@inertiajs/vue3';
-import { ref, computed } from 'vue';
+import { ref, computed, watch, onBeforeMount } from 'vue';
 import ConfirmModal from '@/Components/ConfirmModal.vue';
 import AlertTransition from '@/Transitions/AlertTransition.vue';
+import { debounceRef } from '@/CustomRef/debounceRef';
+import Pagination from '@/Components/Pagination.vue';
 
 const modal_open = ref(false);
 const confirm_modal_open = ref(false);
 const state = ref('');
 const currency_type = ref(null);
 const page = usePage();
-const search = ref('');
+const search = debounceRef(null, 200);
 
 const props = defineProps({
     currency_types: Object,
@@ -56,12 +58,19 @@ function currency_type_del(id){
 }
 
 //search
-const filteredCurrencyTypes = computed(() => {
-    return props.currency_types.filter((c_type) => {
-        return c_type.name.toLowerCase().includes(search.value.toLowerCase());
+watch(search, function(new_v){
+    router.get(route('currency_type.index'), {
+        search_item : new_v,
+    }, {
+        preserveState: true,
     });
-})
+});
 
+onBeforeMount(() => {
+    if (props.currency_types.current_page == 1) {
+        search.value = '';
+    }
+});
 </script>
 <template>
     <Head title="Currency Type" />
@@ -115,7 +124,7 @@ const filteredCurrencyTypes = computed(() => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(currency_type, index) in filteredCurrencyTypes" class="text-center border-b dark:border-gray-700" :key="currency_type.id">
+                                <tr v-for="(currency_type, index) in currency_types.data" class="text-center border-b dark:border-gray-700" :key="currency_type.id">
                                     <td class="w-4 p-4">
                                         <div class="flex items-center">
                                             <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -142,6 +151,7 @@ const filteredCurrencyTypes = computed(() => {
                         </table>
                     </div>
                 </div>
+                <Pagination :items="currency_types"/>
             </div>
         </section>
         <ModalTransition>

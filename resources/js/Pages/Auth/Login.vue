@@ -7,6 +7,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import ThemeSwitcher from '@/Components/ThemeSwitcher.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import ValidateTransition from '@/Transitions/ValidateTransition.vue';
 
 defineProps({
     canResetPassword: {
@@ -60,33 +61,39 @@ const submit = () => {
                     </div>
                     <div class="flex flex-col gap-2 mt-4">
                         <div class="w-full">
-                            <InputLabel for="email" value="Email" />
-
+                            <div class="flex items-center gap-1">
+                                <InputLabel for="email" value="Email" />
+                                <ValidateTransition>
+                                    <InputError :message="form.errors.email" />
+                                </ValidateTransition>
+                            </div>
                             <TextInput
                                 id="email"
                                 type="email"
                                 class="mt-1 block w-full"
                                 v-model="form.email"
+                                @input="form.clearErrors('email')"
                                 required
                                 autofocus
                                 autocomplete="username"
                             />
-
-                            <InputError class="mt-2" :message="form.errors.email" />
                         </div>
                         <div class="w-full">
-                            <InputLabel for="password" value="Password" />
-
+                            <div class="flex items-center gap-1">
+                                <InputLabel for="password" value="Password" />
+                                <ValidateTransition>
+                                    <InputError :message="form.errors.password" />
+                                </ValidateTransition>
+                            </div>
                             <TextInput
                                 id="password"
                                 type="password"
                                 class="mt-1 block w-full"
                                 v-model="form.password"
+                                @input="form.clearErrors('password')"
                                 required
                                 autocomplete="current-password"
                             />
-
-                            <InputError class="mt-2" :message="form.errors.password" />
                         </div>
                     </div>
 

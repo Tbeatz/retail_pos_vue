@@ -7,6 +7,7 @@ import TextInput from '@/Components/TextInput.vue';
 import ThemeSwitcher from '@/Components/ThemeSwitcher.vue';
 import SelectInput from '@/Components/SelectInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import ValidateTransition from '@/Transitions/ValidateTransition.vue';
 
 const form = useForm({
     name: '',
@@ -54,95 +55,128 @@ const submit = () => {
                 </div>
                 <div class="flex flex-row gap-2 mt-4">
                     <div class="w-1/2">
-                        <InputLabel for="name" value="Name" />
+                        <div class="flex items-center gap-1">
+                            <InputLabel for="name" value="Name" />
+                            <ValidateTransition>
+                                <InputError :message="form.errors.name" />
+                            </ValidateTransition>
+                        </div>
                         <TextInput
                             id="name"
                             type="text"
                             class="mt-1 block w-full"
                             v-model="form.name"
+                            @input="form.clearErrors('name')"
                             required
                             autofocus
                             autocomplete="name"
                         />
-                        <InputError class="mt-2" :message="form.errors.name" />
                     </div>
                     <div class="w-1/2">
-                        <InputLabel for="email" value="Email" />
+                        <div class="flex items-center gap-1">
+                            <InputLabel for="email" value="Email" />
+                            <ValidateTransition>
+                                <InputError :message="form.errors.email" />
+                            </ValidateTransition>
+                        </div>
                         <TextInput
                             id="email"
                             type="email"
                             class="mt-1 block w-full"
                             v-model="form.email"
+                            @input="form.clearErrors('email')"
                             required
                             autocomplete="username"
                         />
-                        <InputError class="mt-2" :message="form.errors.email" />
                     </div>
                 </div>
 
                 <div class="flex flex-row gap-2 mt-4">
                     <div class="w-1/2">
-                        <InputLabel for="phone" value="Phone No." />
+                        <div class="flex items-center gap-1">
+                            <InputLabel for="phone" value="Phone No." />
+                            <ValidateTransition>
+                                <InputError :message="form.errors.phone" />
+                            </ValidateTransition>
+                        </div>
                         <TextInput
                             id="phone"
                             type="text"
                             class="mt-1 block w-full"
                             v-model="form.phone"
+                            @input="form.clearErrors('phone')"
                             required
                             autocomplete="phone"
                         />
-                        <InputError class="mt-2" :message="form.errors.phone" />
                     </div>
                     <div class="w-1/2">
-                        <InputLabel for="address" value="Address" />
+                        <div class="flex items-center gap-1">
+                            <InputLabel for="address" value="Address" />
+                            <ValidateTransition>
+                                <InputError :message="form.errors.address" />
+                            </ValidateTransition>
+                        </div>
                         <TextInput
                             id="address"
                             type="text"
                             class="mt-1 block w-full"
                             v-model="form.address"
+                            @input="form.clearErrors('address')"
                             required
                             autocomplete="address"
                         />
-                        <InputError class="mt-2" :message="form.errors.address" />
                     </div>
                 </div>
 
                 <div class="mt-4">
-                    <InputLabel for="position_id" value="Position" />
+                    <div class="flex items-center gap-1">
+                        <InputLabel for="position_id" value="Position" />
+                        <ValidateTransition>
+                            <InputError :message="form.errors.position_id" />
+                        </ValidateTransition>
+                    </div>
                     <SelectInput
                         v-model="form.position_id"
+                        @change="form.clearErrors('position_id')"
                         required
                         id="position_id"
                         :value="positions"
                         nameProp="name"/>
-                    <InputError class="mt-2" :message="form.errors.position_id" />
                 </div>
                 <div class="flex flex-row gap-2 mt-4 mb-4">
                     <div class="w-1/2">
-                        <InputLabel for="password" value="Password" />
+                        <div class="flex items-center gap-1">
+                            <InputLabel for="password" value="Password" />
+                            <ValidateTransition>
+                                <InputError :message="form.errors.password" />
+                            </ValidateTransition>
+                        </div>
                         <TextInput
                             id="password"
                             type="password"
                             class="mt-1 block w-full"
                             v-model="form.password"
+                            @input="form.clearErrors('password')"
                             required
                             autocomplete="new-password"
                         />
-                        <InputError class="mt-2" :message="form.errors.password" />
                     </div>
                     <div class="w-1/2">
-                        <InputLabel for="password_confirmation" value="Confirm Password" />
-
+                        <div class="flex items-center gap-1">
+                            <InputLabel for="password_confirmation" value="Confirm Password" />
+                            <ValidateTransition>
+                                <InputError :message="form.errors.password_confirmation" />
+                            </ValidateTransition>
+                        </div>
                         <TextInput
                             id="password_confirmation"
                             type="password"
                             class="mt-1 block w-full"
                             v-model="form.password_confirmation"
+                            @input="form.clearErrors('password_confirmation')"
                             required
                             autocomplete="new-password"
                         />
-
-                        <InputError class="mt-2" :message="form.errors.password_confirmation" />
                     </div>
                 </div>
                 <div class="flex justify-between items-center">
