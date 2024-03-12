@@ -1,6 +1,17 @@
 <?php
 
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\BusinessTypeController;
+use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\PositionController;
+use App\Http\Controllers\PaymentMethodController;
+use App\Http\Controllers\InvoiceTypeController;
+use App\Http\Controllers\InvoiceStatusController;
+use App\Http\Controllers\DiscountTypeController;
+use App\Http\Controllers\TaxTypeController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CurrencyTypeController;
+use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\File;
@@ -49,7 +60,23 @@ Route::middleware('auth')->group(function () {
     })->name('file')->where('path', '.*');
 
     //Nav Tabs
+    //(Role)
+    Route::resource('role', RoleController::class);
+    //(Business)
+    Route::resource('business_type', BusinessTypeController::class);
+    Route::resource('business', BusinessController::class);
+    Route::resource('position', PositionController::class);
+    //(Financial)
+    Route::resource('payment_method', PaymentMethodController::class);
+    Route::resource('invoice_type', InvoiceTypeController::class);
+    Route::resource('invoice_status', InvoiceStatusController::class);
+    Route::resource('discount_type', DiscountTypeController::class);
+    Route::resource('tax_type', TaxTypeController::class);
+    //(Product Category)
+    Route::resource('category', CategoryController::class);
+    //(Miscellaneous)
     Route::resource('currency_type', CurrencyTypeController::class);
+    Route::resource('unit', UnitController::class);
 });
 
 require __DIR__.'/auth.php';

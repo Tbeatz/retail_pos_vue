@@ -13,7 +13,7 @@ defineProps({
         type: String,
     },
     positions: {
-        type: Array,
+        type: Object,
     },
     session: {
         type: String,

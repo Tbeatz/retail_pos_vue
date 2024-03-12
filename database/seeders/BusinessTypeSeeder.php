@@ -20,12 +20,12 @@ class BusinessTypeSeeder extends Seeder
 
         BusinessType::create([
             'id' => 1,
-            'name' => 'City Mart',
+            'name' => 'Nonprofit Organization',
         ]);
 
         BusinessType::create([
             'id' => 2,
-            'name' => 'One Stop Mart',
+            'name' => 'Partnership',
         ]);
     }
 }

@@ -67,9 +67,14 @@ class CurrencyTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CurrencyType $currency_type)
+    public function destroy($currency_type, Request $request)
     {
-        $currency_type->delete();
+        if ($currency_type == 'all') {
+            CurrencyType::query()->delete();
+        } else {
+            $search_id = $currency_type == 'param' ? $request->selected_ids : [$currency_type];
+            CurrencyType::whereIn('id', $search_id)->delete();
+        }
         return to_route('currency_type.index')->with('message', 'Deleted Successfully!');
     }
 }

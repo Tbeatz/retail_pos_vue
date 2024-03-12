@@ -75,8 +75,8 @@ onUnmounted(() => {
                 </Link>
             </div>
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex items-center">
-                <Link :href="route('dashboard')"
-                    :class="route().current('dashboard')
+                <Link :href="route('role.index')"
+                    :class="route().current('role.index')
                     ? 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-white bg-blue-500 dark:bg-blue-600 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'
                     : 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-gray-100 bg-purple-600 dark:bg-purple-700 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'">
                         Role
@@ -90,7 +90,7 @@ onUnmounted(() => {
                     <template v-slot:trigger>
                         <span class="inline-flex rounded-md">
                             <button type="button"
-                            :class="route().current('profile.edit')
+                            :class="(route().current('business_type.index') || route().current('business.index') || route().current('position.index'))
                                 ? 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-white bg-blue-500 dark:bg-blue-600 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'
                                 : 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-gray-100 bg-purple-600 dark:bg-purple-700 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'">
                                 Business
@@ -101,9 +101,9 @@ onUnmounted(() => {
                         </span>
                     </template>
                     <template #content>
-                        <DropdownLink :href="route('profile.edit')" :active="route().current('profile.edit')"> Business Type </DropdownLink>
-                        <DropdownLink :href="route('logout')" :active="route().current('profile.edit')" method="post" as="button"> Business </DropdownLink>
-                        <DropdownLink :href="route('profile.edit')" :active="route().current('profile.edit')"> Position </DropdownLink>
+                        <DropdownLink :href="route('business_type.index')" :active="route().current('business_type.index')"> Business Type </DropdownLink>
+                        <DropdownLink :href="route('business.index')" :active="route().current('business.index')"> Business </DropdownLink>
+                        <DropdownLink :href="route('position.index')" :active="route().current('position.index')"> Position </DropdownLink>
                     </template>
                 </Dropdown>
             </div>
@@ -112,7 +112,7 @@ onUnmounted(() => {
                     <template v-slot:trigger>
                         <span class="inline-flex rounded-md">
                             <button type="button"
-                            :class="route().current('profile.edit')
+                            :class="(route().current('payment_method.index') || route().current('invoice_type.index') || route().current('invoice_status.index') || route().current('discount_type.index') || route().current('tax_type.index'))
                                 ? 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-white bg-blue-500 dark:bg-blue-600 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'
                                 : 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-gray-100 bg-purple-600 dark:bg-purple-700 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'">
                                 Financial
@@ -123,17 +123,17 @@ onUnmounted(() => {
                         </span>
                     </template>
                     <template #content>
-                        <DropdownLink :href="route('profile.edit')" :active="route().current('profile.edit')"> Payment Method </DropdownLink>
-                        <DropdownLink :href="route('profile.edit')" :active="route().current('profile.edit')"> Invoice Type </DropdownLink>
-                        <DropdownLink :href="route('logout')" :active="route().current('profile.edit')" method="post" as="button"> Invoice Status </DropdownLink>
-                        <DropdownLink :href="route('profile.edit')" :active="route().current('profile.edit')"> Discount Type </DropdownLink>
-                        <DropdownLink :href="route('profile.edit')" :active="route().current('profile.edit')"> Tax Type </DropdownLink>
+                        <DropdownLink :href="route('payment_method.index')" :active="route().current('payment_method.index')"> Payment Method </DropdownLink>
+                        <DropdownLink :href="route('invoice_type.index')" :active="route().current('invoice_type.index')"> Invoice Type </DropdownLink>
+                        <DropdownLink :href="route('invoice_status.index')" :active="route().current('invoice_status.index')"> Invoice Status </DropdownLink>
+                        <DropdownLink :href="route('discount_type.index')" :active="route().current('discount_type.index')"> Discount Type </DropdownLink>
+                        <DropdownLink :href="route('tax_type.index')" :active="route().current('tax_type.index')"> Tax Type </DropdownLink>
                     </template>
                 </Dropdown>
             </div>
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex items-center">
-                <Link :href="route('dashboard')"
-                    :class="route().current('dashboard')
+                <Link :href="route('category.index')"
+                    :class="route().current('category.index')
                     ? 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-white bg-blue-500 dark:bg-blue-600 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'
                     : 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-gray-100 bg-purple-600 dark:bg-purple-700 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'">
                         Product Category
@@ -147,7 +147,7 @@ onUnmounted(() => {
                     <template v-slot:trigger>
                         <span class="inline-flex rounded-md">
                             <button type="button"
-                                :class="(route().current('profile.edit') || route().current('currency_type.index'))
+                                :class="(route().current('unit.index') || route().current('currency_type.index'))
                                 ? 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-white bg-blue-500 dark:bg-blue-600 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'
                                 : 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-gray-100 bg-purple-600 dark:bg-purple-700 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'">
                                 Miscellaneous
@@ -160,7 +160,7 @@ onUnmounted(() => {
                     </template>
                     <template #content>
                         <DropdownLink :href="route('currency_type.index')" :active="route().current('currency_type.index')"> Currency Type </DropdownLink>
-                        <DropdownLink :href="route('profile.edit')" :active="route().current('profile.edit')"> Unit </DropdownLink>
+                        <DropdownLink :href="route('unit.index')" :active="route().current('unit.index')"> Unit </DropdownLink>
                     </template>
                 </Dropdown>
             </div>
@@ -227,40 +227,40 @@ onUnmounted(() => {
         <!-- Responsive Navigation Menu -->
         <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" class="sm:hidden overflow-y-auto">
             <div class="pt-2 pb-3 space-y-1">
-                <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
+                <ResponsiveNavLink :href="route('role.index')" :active="route().current('role.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
                    Role
                 </ResponsiveNavLink>
             </div>
             <div class="pt-2 pb-3 space-y-1 border-t border-gray-200 dark:border-gray-600">
-                <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
+                <ResponsiveNavLink :href="route('business_type.index')" :active="route().current('business_type.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
                    Business Type
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
+                <ResponsiveNavLink :href="route('business.index')" :active="route().current('business.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
                    Business
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
+                <ResponsiveNavLink :href="route('position.index')" :active="route().current('position.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
                    Position
                 </ResponsiveNavLink>
             </div>
             <div class="pt-2 pb-3 space-y-1 border-t border-gray-200 dark:border-gray-600">
-                <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
+                <ResponsiveNavLink :href="route('payment_method.index')" :active="route().current('payment_method.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
                     Payment Method
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
+                <ResponsiveNavLink :href="route('invoice_type.index')" :active="route().current('invoice_type.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
                     Invoice Type
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
+                <ResponsiveNavLink :href="route('invoice_status.index')" :active="route().current('invoice_status.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
                     Invoice Status
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
+                <ResponsiveNavLink :href="route('discount_type.index')" :active="route().current('discount_type.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
                     Discount Type
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
+                <ResponsiveNavLink :href="route('tax_type.index')" :active="route().current('tax_type.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
                     Tax Type
                 </ResponsiveNavLink>
             </div>
             <div class="pt-2 pb-3 space-y-1 border-t border-gray-200 dark:border-gray-600">
-                <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
+                <ResponsiveNavLink :href="route('category.index')" :active="route().current('category.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
                    Product Category
                 </ResponsiveNavLink>
             </div>
@@ -268,7 +268,7 @@ onUnmounted(() => {
                 <ResponsiveNavLink :href="route('currency_type.index')" :active="route().current('currency_type.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
                    Currency Type
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
+                <ResponsiveNavLink :href="route('unit.index')" :active="route().current('unit.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
                     Unit
                 </ResponsiveNavLink>
             </div>
