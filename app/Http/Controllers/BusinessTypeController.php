@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BusinessTypeRequest;
 use App\Models\BusinessType;
+use App\Models\Tenant;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+
 
 class BusinessTypeController extends Controller
 {
@@ -17,9 +19,12 @@ class BusinessTypeController extends Controller
         $business_types = BusinessType::when($request->search_item, function($q, $v){
             return $q->where('name', 'LIKE', '%'. $v .'%');
         })->paginate(10);
+        
         return Inertia::render('BusinessType/BusinessType', [
             'business_types' => $business_types,
-        ]);
+            'search_item' => $request->search_item,
+            'exists' => BusinessType::exists(),
+        ]);  
     }
 
     /**

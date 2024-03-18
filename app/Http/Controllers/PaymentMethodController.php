@@ -19,6 +19,9 @@ class PaymentMethodController extends Controller
         })->paginate(10);
         return Inertia::render('PaymentMethod/PaymentMethod', [
             'payment_methods' => $payment_methods,
+            'search_item' => $request->search_item,
+            'exists' => PaymentMethod::exists(),
+
         ]);
     }
 

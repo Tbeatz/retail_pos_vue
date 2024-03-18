@@ -3,28 +3,29 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import CreateUpdateModal from './Modal/CreateUpdateModal.vue';
 import ModalTransition from '@/Transitions/ModalTransition.vue';
 import { Head, router, usePage } from '@inertiajs/vue3';
-import { ref, computed, watch, onBeforeMount } from 'vue';
+import { ref, watch } from 'vue';
 import ConfirmModal from '@/Components/ConfirmModal.vue';
 import AlertTransition from '@/Transitions/AlertTransition.vue';
-import { debounceRef } from '@/CustomRef/debounceRef';
 import Pagination from '@/Components/Pagination.vue';
 import FadeTransition from '@/Transitions/FadeTransition.vue';
 import InitialCard from '@/Components/InitialCard.vue';
+import { debounce } from '@/Composables/debounce';
+
+const props = defineProps({
+    units: Object,
+    search_item: String,
+    exists: Boolean,
+})
 
 const modal_open = ref(false);
 const confirm_modal_open = ref(false);
 const state = ref('');
 const unit = ref(null);
 const page = usePage();
-const search = debounceRef(null, 200);
+const search = ref(props.search_item);
 const checked = ref([]);
 const check_del = ref(false);
-const all_check = ref(false);
 const all_check_val = ref(false);
-
-const props = defineProps({
-    units: Object,
-})
 
 //edit and create
 function modal_close(){
@@ -36,10 +37,10 @@ function modal_close(){
     }, 3000);
 }
 
-function _modal_open(value, c_type){
+function _modal_open(value, data){
     modal_open.value = true;
     state.value = value;
-    unit.value = c_type;
+    unit.value = data;
 }
 
 //delete
@@ -47,15 +48,16 @@ function confirm_modal_close(){
     confirm_modal_open.value = false;
 }
 
-function _confirm_modal_open(c_type){
+function _confirm_modal_open(data){
     confirm_modal_open.value = true;
-    unit.value = c_type;
+    unit.value = data;
 }
 
 function unit_del(id){
     if (id == 'all') {
         var request_data = {
             onSuccess: () => {
+                checked.value = [];
                 all_check_val.value = false;
                 confirm_modal_close();
                 setTimeout(() => {
@@ -90,19 +92,13 @@ function unit_del(id){
 }
 
 //search
-watch(search, function(new_v){
+watch(search, debounce(function(new_v){
     router.get(route('unit.index'), {
         search_item : new_v,
     }, {
         preserveState: true,
     });
-});
-
-onBeforeMount(() => {
-    if (props.units.current_page == 1) {
-        search.value = '';
-    }
-});
+}), 300);
 
 //checkbox
 function check_input(checked_id, event){
@@ -123,11 +119,9 @@ function all_check_fn(event){
     if(all_check_val.value){
         checked.value = 'all';
         check_del.value = true;
-        all_check.value = true;
     } else {
         checked.value = [];
         check_del.value = false;
-        all_check.value = false;
     }
 }
 
@@ -144,7 +138,7 @@ function all_check_fn(event){
                 </div>
             </AlertTransition>
             <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
-                <InitialCard v-if="units.total == 0"
+                <InitialCard v-if="exists == false"
                     @create_modal_open="_modal_open('create', null)"
                     title="Unit"
                     desc="Define measurement units for your products or services."
@@ -201,7 +195,7 @@ function all_check_fn(event){
                                     <tr v-for="(unit, index) in units.data" class="text-center border-b dark:border-gray-700" :key="unit.id">
                                         <td class="w-4 p-4">
                                             <div class="flex items-center">
-                                                <input v-if="all_check == false" @change="check_input(unit.id, $event)" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                <input v-if="all_check_val == false" @change="check_input(unit.id, $event)" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                                 <label class="sr-only">checkbox</label>
                                             </div>
                                         </td>

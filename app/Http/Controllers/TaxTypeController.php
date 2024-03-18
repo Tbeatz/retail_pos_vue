@@ -19,6 +19,8 @@ class TaxTypeController extends Controller
         })->paginate(10);
         return Inertia::render('TaxType/TaxType', [
             'tax_types' => $tax_types,
+            'search_item' => $request->search_item,
+            'exists' => TaxType::exists(),
         ]);
     }
 

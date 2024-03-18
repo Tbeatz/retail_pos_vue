@@ -8,6 +8,7 @@ import TextInput from '@/Components/TextInput.vue';
 import ThemeSwitcher from '@/Components/ThemeSwitcher.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import ValidateTransition from '@/Transitions/ValidateTransition.vue';
+import AlertTransition from '@/Transitions/AlertTransition.vue';
 
 defineProps({
     canResetPassword: {
@@ -34,7 +35,13 @@ const submit = () => {
 <template>
     <GuestLayout>
         <Head title="Log in" />
-
+        <AlertTransition>
+            <div v-if="$page.props.flash.register_success" class="fixed top-12 right-12 z-50">
+                <div class="p-3 text-sm text-blue-900 rounded-lg bg-white shadow-md shadow-blue-500 dark:bg-gray-900 dark:text-white" role="alert">
+                    <span class="font-sans font-semibold">{{ $page.props.flash.register_success }}</span>
+                </div>
+            </div>
+        </AlertTransition>
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>

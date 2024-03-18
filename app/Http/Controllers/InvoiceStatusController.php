@@ -19,6 +19,8 @@ class InvoiceStatusController extends Controller
         })->paginate(10);
         return Inertia::render('InvoiceStatus/InvoiceStatus', [
             'invoice_statuses' => $invoice_statuses,
+            'search_item' => $request->search_item,
+            'exists' => InvoiceStatus::exists(),
         ]);
     }
 

@@ -19,6 +19,8 @@ class CurrencyTypeController extends Controller
         })->paginate(10);
         return Inertia::render('CurrencyType/CurrencyType', [
             'currency_types' => $currency_types,
+            'search_item' => $request->search_item,
+            'exists' => CurrencyType::exists(),
         ]);
     }
 

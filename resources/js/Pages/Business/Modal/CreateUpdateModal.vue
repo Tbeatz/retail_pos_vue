@@ -39,7 +39,7 @@ import { useForm } from '@inertiajs/vue3';
     <div id="business_modal" tabindex="-1" aria-hidden="true" class="flex bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full inset-0 h-full">
         <div class="relative p-4 w-full max-w-xl max-h-full">
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-900 bg-purple-500 dark:bg-purple-600">
+                <div class="flex items-center justify-between p-4 md:p-4 border-b rounded-t dark:border-gray-900 bg-purple-500 dark:bg-purple-600">
                     <h3 class="text-lg font-semibold text-white dark:text-gray-200">
                         {{state == 'create' ? 'Create New' : 'Edit'}} Business
                     </h3>
@@ -63,7 +63,7 @@ import { useForm } from '@inertiajs/vue3';
                                 type="text"
                                 id="name"
                                 v-model="form.name"
-                                class="mt-2 block w-full"
+                                class="mt-1 block w-full"
                                 placeholder="Type business name"
                                 @input="form.clearErrors('name')"
                                 required
@@ -96,7 +96,7 @@ import { useForm } from '@inertiajs/vue3';
                             <TextareaInput
                                 id="address"
                                 v-model="form.address"
-                                class="mt-2 block w-full"
+                                class="mt-1 block w-full"
                                 @input="form.clearErrors('address')"
                                 required
                             />
@@ -112,7 +112,7 @@ import { useForm } from '@inertiajs/vue3';
                                 type="text"
                                 id="email"
                                 v-model="form.email"
-                                class="mt-2 block w-full"
+                                class="mt-1 block w-full"
                                 placeholder="Type business email"
                                 @input="form.clearErrors('email')"
                                 required
@@ -129,7 +129,7 @@ import { useForm } from '@inertiajs/vue3';
                                 type="text"
                                 id="phone"
                                 v-model="form.phone"
-                                class="mt-2 block w-full"
+                                class="mt-1 block w-full"
                                 placeholder="Type phone number"
                                 @input="form.clearErrors('phone')"
                                 required

@@ -20,12 +20,12 @@ class PositionSeeder extends Seeder
 
         Position::create([
             'id' => 1,
-            'name' => 'Manager',
+            'name' => 'Owner',
         ]);
 
         Position::create([
             'id' => 2,
-            'name' => 'Officer',
+            'name' => 'Super Admin',
         ]);
     }
 }

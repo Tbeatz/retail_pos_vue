@@ -29,6 +29,7 @@ onMounted(() => {
 onUnmounted(() => {
   _scroll.value.removeEventListener('scroll', handleScroll);
 });
+
 </script>
 
 <template>
@@ -45,14 +46,14 @@ onUnmounted(() => {
             </svg>
             <span class="pointer-events-none dark:text-gray-200 text-gray-600 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute left-11 font-sans font-semibold shadow-sm px-2 py-1 rounded-md shadow-blue-400 z-10">Reports</span>
         </NavLink>
-        <NavLink href="#" class="relative inline-flex items-center group">
+        <NavLink :href="route('sale.index')" :active="route().current('sale.index')" class="relative inline-flex items-center group">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                 <path d="M10.464 8.746c.227-.18.497-.311.786-.394v2.795a2.252 2.252 0 0 1-.786-.393c-.394-.313-.546-.681-.546-1.004 0-.323.152-.691.546-1.004ZM12.75 15.662v-2.824c.347.085.664.228.921.421.427.32.579.686.579.991 0 .305-.152.671-.579.991a2.534 2.534 0 0 1-.921.42Z" />
                 <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v.816a3.836 3.836 0 0 0-1.72.756c-.712.566-1.112 1.35-1.112 2.178 0 .829.4 1.612 1.113 2.178.502.4 1.102.647 1.719.756v2.978a2.536 2.536 0 0 1-.921-.421l-.879-.66a.75.75 0 0 0-.9 1.2l.879.66c.533.4 1.169.645 1.821.75V18a.75.75 0 0 0 1.5 0v-.81a4.124 4.124 0 0 0 1.821-.749c.745-.559 1.179-1.344 1.179-2.191 0-.847-.434-1.632-1.179-2.191a4.122 4.122 0 0 0-1.821-.75V8.354c.29.082.559.213.786.393l.415.33a.75.75 0 0 0 .933-1.175l-.415-.33a3.836 3.836 0 0 0-1.719-.755V6Z" clip-rule="evenodd" />
             </svg>
             <span class="pointer-events-none dark:text-gray-200 text-gray-600 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute left-11 font-sans font-semibold shadow-sm px-2 py-1 rounded-md shadow-blue-400 z-10">Sales</span>
         </NavLink>
-        <NavLink href="#" class="relative inline-flex items-center group">
+        <NavLink :href="route('product.index')" :active="route().current('product.index')" class="relative inline-flex items-center group">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                 <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z" clip-rule="evenodd" />
                 <path fill-rule="evenodd" d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V9.375ZM6 12a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V12Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 15a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V15Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 18a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V18Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
@@ -74,16 +75,27 @@ onUnmounted(() => {
                     <img src="/style_images/unity.png" alt="Company Logo" class="w-50 h-10">
                 </Link>
             </div>
-            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex items-center">
-                <Link :href="route('role.index')"
-                    :class="route().current('role.index')
-                    ? 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-white bg-blue-500 dark:bg-blue-600 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'
-                    : 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-gray-100 bg-purple-600 dark:bg-purple-700 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'">
-                        Role
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ms-1 -me-0.5 h-5 w-5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                        </svg>
-                </Link>
+            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex items-center" v-if="$page.props.auth.user.role_id == 1">
+                <Dropdown align="right" width="48">
+                    <template v-slot:trigger>
+                        <span class="inline-flex rounded-md">
+                            <button type="button"
+                            :class="(route().current('role.index') || route().current('tenant.index') || route().current('user.index'))
+                                ? 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-white bg-blue-500 dark:bg-blue-600 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'
+                                : 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-sans rounded-md text-white dark:text-gray-100 bg-purple-600 dark:bg-purple-700 hover:text-blue-100 dark:hover:text-blue-200 focus:outline-none transition ease-in-out duration-150'">
+                                User Management
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ms-1 -me-0.5 h-5 w-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                                </svg>
+                            </button>
+                        </span>
+                    </template>
+                    <template #content>
+                        <DropdownLink :href="route('role.index')" :active="route().current('role.index')"> Role </DropdownLink>
+                        <DropdownLink v-if="!$page.props.auth.tenant" :href="route('tenant.index')" :active="route().current('tenant.index')"> Tenant Users </DropdownLink>
+                        <DropdownLink v-if="$page.props.auth.user.position_id == 1" :href="route('user.index')" :active="route().current('user.index')"> Users </DropdownLink>
+                    </template>
+                </Dropdown>
             </div>
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex items-center">
                 <Dropdown align="right" width="48">
@@ -229,6 +241,12 @@ onUnmounted(() => {
             <div class="pt-2 pb-3 space-y-1">
                 <ResponsiveNavLink :href="route('role.index')" :active="route().current('role.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
                    Role
+                </ResponsiveNavLink>
+                <ResponsiveNavLink v-if="!$page.props.auth.tenant" :href="route('tenant.index')" :active="route().current('tenant.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
+                   Tenant Users
+                </ResponsiveNavLink>
+                <ResponsiveNavLink v-if="$page.props.auth.user.position_id == 1" :href="route('user.index')" :active="route().current('user.index')" class="block px-4 py-2 text-sm text-blue-500 dark:text-blue-600 hover:bg-purple-100 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-400">
+                   Users
                 </ResponsiveNavLink>
             </div>
             <div class="pt-2 pb-3 space-y-1 border-t border-gray-200 dark:border-gray-600">

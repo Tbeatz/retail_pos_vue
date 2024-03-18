@@ -19,6 +19,8 @@ class PositionController extends Controller
         })->paginate(10);
         return Inertia::render('Position/Position', [
             'positions' => $positions,
+            'search_item' => $request->search_item,
+            'exists' => Position::exists(),
         ]);
     }
 

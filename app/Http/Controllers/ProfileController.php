@@ -63,7 +63,6 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
         $request->user()->save();
-
         return to_route('profile.edit');
     }
 

@@ -3,31 +3,33 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import CreateUpdateModal from './Modal/CreateUpdateModal.vue';
 import ModalTransition from '@/Transitions/ModalTransition.vue';
 import { Head, router, usePage } from '@inertiajs/vue3';
-import { ref, computed, watch, onBeforeMount } from 'vue';
+import { ref, watch } from 'vue';
 import ConfirmModal from '@/Components/ConfirmModal.vue';
 import AlertTransition from '@/Transitions/AlertTransition.vue';
-import { debounceRef } from '@/CustomRef/debounceRef';
 import Pagination from '@/Components/Pagination.vue';
 import FadeTransition from '@/Transitions/FadeTransition.vue';
 import SelectInput from '@/Components/SelectInput.vue';
 import InitialCard from '@/Components/InitialCard.vue';
+import { debounce } from '@/Composables/debounce';
+
+const props = defineProps({
+    businesses: Object,
+    business_types: Object,
+    exists: Boolean,
+    search_item: String,
+    filter_item: String,
+})
 
 const modal_open = ref(false);
 const confirm_modal_open = ref(false);
 const state = ref('');
 const business = ref(null);
 const page = usePage();
-const search = debounceRef(null, 200);
-const filter = ref('');
+const search = ref(props.search_item);
+const filter = ref(props.filter_item);
 const checked = ref([]);
 const check_del = ref(false);
-const all_check = ref(false);
 const all_check_val = ref(false);
-
-const props = defineProps({
-    businesses: Object,
-    business_types: Object,
-})
 
 //edit and create
 function modal_close(){
@@ -39,10 +41,10 @@ function modal_close(){
     }, 3000);
 }
 
-function _modal_open(value, c_type){
+function _modal_open(value, data){
     modal_open.value = true;
     state.value = value;
-    business.value = c_type;
+    business.value = data;
 }
 
 //delete
@@ -50,9 +52,9 @@ function confirm_modal_close(){
     confirm_modal_open.value = false;
 }
 
-function _confirm_modal_open(c_type){
+function _confirm_modal_open(data){
     confirm_modal_open.value = true;
-    business.value = c_type;
+    business.value = data;
 }
 
 function business_del(id){
@@ -93,21 +95,14 @@ function business_del(id){
 }
 
 //search
-watch([search, filter], function([new_v, new_f_v]){
+watch([search, filter], debounce(function([new_v, new_f_v]){
     router.get(route('business.index'), {
         search_item : new_v,
         filter_item : new_f_v,
     }, {
         preserveState: true,
     });
-});
-
-onBeforeMount(() => {
-    if (props.businesses.current_page == 1) {
-        search.value = '';
-        filter.value = '';
-    }
-});
+}), 300);
 
 //checkbox
 function check_input(checked_id, event){
@@ -128,11 +123,9 @@ function all_check_fn(event){
     if(all_check_val.value){
         checked.value = 'all';
         check_del.value = true;
-        all_check.value = true;
     } else {
         checked.value = [];
         check_del.value = false;
-        all_check.value = false;
     }
 }
 
@@ -149,7 +142,7 @@ function all_check_fn(event){
                 </div>
             </AlertTransition>
             <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
-                <InitialCard v-if="businesses.total == 0"
+                <InitialCard v-if="exists == false"
                     @create_modal_open="_modal_open('create', null)"
                     title="Business"
                     desc="Start building your business today! Create and manage your own ventures with ease. The possibilities are endless."
@@ -218,7 +211,7 @@ function all_check_fn(event){
                                     <tr v-for="(business, index) in businesses.data" class="text-center border-b dark:border-gray-700" :key="business.id">
                                         <td class="w-4 p-4">
                                             <div class="flex items-center">
-                                                <input v-if="all_check == false" @change="check_input(business.id, $event)" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                <input v-if="all_check_val == false" @change="check_input(business.id, $event)" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                                 <label class="sr-only">checkbox</label>
                                             </div>
                                         </td>

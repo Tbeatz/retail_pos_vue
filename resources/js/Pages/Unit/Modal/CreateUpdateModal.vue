@@ -32,7 +32,7 @@ import { useForm } from '@inertiajs/vue3';
     <div id="unit_modal" tabindex="-1" aria-hidden="true" class="flex bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full inset-0 h-full">
         <div class="relative p-4 w-full max-w-md max-h-full">
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-900 bg-purple-500 dark:bg-purple-600">
+                <div class="flex items-center justify-between p-4 md:p-4 border-b rounded-t dark:border-gray-900 bg-purple-500 dark:bg-purple-600">
                     <h3 class="text-lg font-semibold text-white dark:text-gray-200">
                         {{state == 'create' ? 'Create New' : 'Edit'}} Unit
                     </h3>
@@ -56,7 +56,7 @@ import { useForm } from '@inertiajs/vue3';
                                 type="text"
                                 id="name"
                                 v-model="form.name"
-                                class="mt-2 block w-full"
+                                class="mt-1 block w-full"
                                 placeholder="Type unit name"
                                 @input="form.clearErrors('name')"
                                 required

@@ -19,6 +19,8 @@ class DiscountTypeController extends Controller
         })->paginate(10);
         return Inertia::render('DiscountType/DiscountType', [
             'discount_types' => $discount_types,
+            'search_item' => $request->search_item,
+            'exists' => DiscountType::exists(),
         ]);
     }
 

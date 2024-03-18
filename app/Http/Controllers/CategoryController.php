@@ -19,6 +19,8 @@ class CategoryController extends Controller
         })->paginate(10);
         return Inertia::render('Category/Category', [
             'categories' => $categories,
+            'search_item' => $request->search_item,
+            'exists' => Category::exists(), 
         ]);
     }
 

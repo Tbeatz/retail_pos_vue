@@ -19,6 +19,8 @@ class InvoiceTypeController extends Controller
         })->paginate(10);
         return Inertia::render('InvoiceType/InvoiceType', [
             'invoice_types' => $invoice_types,
+            'search_item' => $request->search_item,
+            'exists' => InvoiceType::exists(),
         ]);
     }
 

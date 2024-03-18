@@ -6,7 +6,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import ThemeSwitcher from '@/Components/ThemeSwitcher.vue';
 import SelectInput from '@/Components/SelectInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm, usePage} from '@inertiajs/vue3';
 import ValidateTransition from '@/Transitions/ValidateTransition.vue';
 
 const form = useForm({
@@ -19,13 +19,20 @@ const form = useForm({
     password_confirmation: '',
 });
 
+const page = usePage();
+
 defineProps({
     positions : Array,
 });
 
 const submit = () => {
     form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
+        onFinish: () => {
+            setTimeout(() => {
+                page.props.flash.register_success = null
+            }, 3000);
+            form.reset('password', 'password_confirmation')
+        },
     });
 };
 </script>

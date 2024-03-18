@@ -13,6 +13,10 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CurrencyTypeController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\TenantController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -47,7 +51,7 @@ Route::middleware('auth')->group(function () {
     //Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/password', [ProfileController::class, 'password'])->name('profile.password');
-    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //files
@@ -60,8 +64,10 @@ Route::middleware('auth')->group(function () {
     })->name('file')->where('path', '.*');
 
     //Nav Tabs
-    //(Role)
+    //(User Management)
     Route::resource('role', RoleController::class);
+    Route::resource('tenant', TenantController::class);
+    Route::resource('user', UserController::class);
     //(Business)
     Route::resource('business_type', BusinessTypeController::class);
     Route::resource('business', BusinessController::class);
@@ -77,6 +83,10 @@ Route::middleware('auth')->group(function () {
     //(Miscellaneous)
     Route::resource('currency_type', CurrencyTypeController::class);
     Route::resource('unit', UnitController::class);
+
+    //Side Tabs
+    Route::resource('product', ProductController::class);
+    Route::resource('sale', SaleController::class);
 });
 
 require __DIR__.'/auth.php';

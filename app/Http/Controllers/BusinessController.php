@@ -26,6 +26,9 @@ class BusinessController extends Controller
         return Inertia::render('Business/Business', [
             'businesses' => $businesses,
             'business_types' => $business_types,
+            'filter_item' => $request->filter_item ?? '',
+            'search_item' => $request->search_item,
+            'exists' => Business::exists(),
         ]);
     }
 

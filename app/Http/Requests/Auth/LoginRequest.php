@@ -48,6 +48,17 @@ class LoginRequest extends FormRequest
                 'email' => trans('auth.failed'),
             ]);
         }
+        
+        $user = Auth::user();
+
+        if (!$user->approve) {
+            Auth::logout();
+            RateLimiter::clear($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'email' => __('Your account is not approved yet.'),
+            ]);
+        }
 
         RateLimiter::clear($this->throttleKey());
     }

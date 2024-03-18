@@ -19,6 +19,8 @@ class UnitController extends Controller
         })->paginate(10);
         return Inertia::render('Unit/Unit', [
             'units' => $units,
+            'search_item' => $request->search_item,
+            'exists' => Unit::exists(),
         ]);
     }
 

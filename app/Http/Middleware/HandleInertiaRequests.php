@@ -33,9 +33,11 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'tenant' => tenant('id'),
             ],
             'flash' => [
                 'message' => session('message'),
+                'register_success' => session('register_success'),
             ]
         ];
     }

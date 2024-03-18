@@ -19,6 +19,8 @@ class RoleController extends Controller
         })->paginate(10);
         return Inertia::render('Role/Role', [
             'roles' => $roles,
+            'search_item' => $request->search_item,
+            'exists' => Role::exists(),
         ]);
     }
 

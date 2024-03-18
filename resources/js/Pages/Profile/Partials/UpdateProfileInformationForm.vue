@@ -23,6 +23,7 @@ const user = usePage().props.auth.user;
 const preview_url = ref('');
 
 const form = useForm({
+    _method: 'patch',
     avatar: user.avatar,
     name: user.name,
     email: user.email,
@@ -40,7 +41,6 @@ function upload(e){
 function form_submit(){
     form.post(route('profile.update'), {
         preserveScroll: true,
-        _method: 'patch'
     });
     URL.revokeObjectURL(preview_url.value);
 }
@@ -186,7 +186,6 @@ function form_submit(){
 
             <div class="flex items-center gap-3">
                 <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
-
                 <Transition
                     enter-active-class="transition ease-in-out"
                     enter-from-class="opacity-0"
