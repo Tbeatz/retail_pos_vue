@@ -67,8 +67,8 @@ function role_del(id){
         };
         var url_param = id;
     } else {
-        var request_data = Array.isArray(id) 
-            ? { 
+        var request_data = Array.isArray(id)
+            ? {
                 data: { selected_ids: id },
                 onSuccess: () => {
                     confirm_modal_close();
@@ -168,24 +168,24 @@ function all_check_fn(event){
                                         Delete Selected
                                     </button>
                                 </FadeTransition>
-                                <button type="button" @click="_modal_open('create', null)" class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                <!-- <button type="button" @click="_modal_open('create', null)" class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                     <svg class="h-5 w-5 mr-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                         <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                                     </svg>
                                     Add Role
-                                </button>
+                                </button> -->
                             </div>
                         </div>
                         <div class="relative overflow-x-auto">
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead class="text-xs text-white uppercase bg-purple-500 dark:bg-purple-700 dark:text-gray-200">
                                     <tr class="text-center">
-                                        <th scope="col" class="p-4">
+                                        <!-- <th scope="col" class="p-4">
                                             <div class="flex items-center">
                                                 <input v-model="all_check_val" @change="all_check_fn($event)" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                                 <label class="sr-only">checkbox</label>
                                             </div>
-                                        </th>
+                                        </th> -->
                                         <th scope="col" class="px-6 py-3">ID</th>
                                         <th scope="col" class="px-6 py-3">Name</th>
                                         <th scope="col" class="px-6 py-3">Actions</th>
@@ -193,12 +193,12 @@ function all_check_fn(event){
                                 </thead>
                                 <tbody>
                                     <tr v-for="(role, index) in roles.data" class="text-center border-b dark:border-gray-700" :key="role.id">
-                                        <td class="w-4 p-4">
+                                        <!-- <td class="w-4 p-4">
                                             <div class="flex items-center">
-                                                <input v-if="all_check_val == false" @change="check_input(role.id, $event)" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                <input v-if="all_check_val == false && (role.id != 1 && role.id != 2)" @change="check_input(role.id, $event)" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                                 <label class="sr-only">checkbox</label>
                                             </div>
-                                        </td>
+                                        </td> -->
                                         <td scope="row" class="px-6 py-3">{{ index + 1 }}</td>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ role.name }}</th>
                                         <td class="px-6 py-3 flex items-center gap-2 justify-center">
@@ -208,11 +208,11 @@ function all_check_fn(event){
                                                     <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
                                                 </svg>
                                             </button>
-                                            <button @click="_confirm_modal_open(role)" class="text-red-500 hover:text-red-800 rounded-lg focus:outline-none dark:text-red-500 dark:hover:text-red-200">
+                                            <!-- <button v-if="role.id != 1 && role.id != 2 && role.id != 3" @click="_confirm_modal_open(role)" class="text-red-500 hover:text-red-800 rounded-lg focus:outline-none dark:text-red-500 dark:hover:text-red-200">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                                                     <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
                                                 </svg>
-                                            </button>
+                                            </button> -->
                                         </td>
                                     </tr>
                                 </tbody>

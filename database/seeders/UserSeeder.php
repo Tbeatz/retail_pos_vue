@@ -24,10 +24,10 @@ class UserSeeder extends Seeder
             'email' => 'tbeatz.feb@gmail.com',
             'address' => 'Yankin, Yangon, Myanmar',
             'phone' => '09252036776',
-            'position_id' => 1,
-            'role_id' => 1, //admin
+            'position_id' => 1, //superadmin
+            'role_id' => 1, //owner
             'approve' => true,
-            'password' => Hash::make('123'), 
+            'password' => Hash::make('123'),
         ]);
     }
 }

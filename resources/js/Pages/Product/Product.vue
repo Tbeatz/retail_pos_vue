@@ -18,8 +18,6 @@ const props = defineProps({
     businesses: Object,
     units: Object,
     categories: Object,
-    discount_types: Object,
-    currency_types: Object,
     search_item: String,
     filter_category: String,
     filter_business: String,
@@ -241,7 +239,7 @@ function all_check_fn(event){
                                         </th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ _product.name }}</th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ _product.category.name }}</th>
-                                        <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ _product.price }} {{ _product.currency_type ? _product.currency_type.name : '' }}</th>
+                                        <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ _product.price }} {{ _product.business.currency_type ? _product.business.currency_type.name : '' }}</th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ _product.instock_qty }}</th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ _product.business.name }}</th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ _product.user ? _product.user.name : '-' }}</th>
@@ -275,8 +273,6 @@ function all_check_fn(event){
                 :businesses="businesses"
                 :units="units"
                 :categories="categories"
-                :discount_types="discount_types"
-                :currency_types="currency_types"    
             />
             <ConfirmModal v-if="confirm_modal_open" @modal_close="confirm_modal_close" @delete="product_del(product.id)" />
         </ModalTransition>

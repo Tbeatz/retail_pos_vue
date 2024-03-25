@@ -29,9 +29,7 @@ return new class extends Migration
             $table->integer('instock_qty')->default(0);
             $table->integer('restock_qty')->nullable();
             $table->foreignIdFor(Business::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(DiscountType::class)->nullable()->constrained()->nullOnDelete();
-            $table->float('discount_price')->nullable();
-            $table->foreignIdFor(CurrencyType::class)->nullable()->constrained()->nullOnDelete();
+            $table->float('discount_price')->nullable()->default(0);
             $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });

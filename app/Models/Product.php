@@ -21,14 +21,6 @@ class Product extends Model
         return $this->belongsTo(Business::class);
     }
 
-    public function discount_type(){
-        return $this->belongsTo(DiscountType::class);
-    }
-
-    public function currency_type(){
-        return $this->belongsTo(CurrencyType::class);
-    }
-
     public function user(){
         return $this->belongsTo(User::class);
     }

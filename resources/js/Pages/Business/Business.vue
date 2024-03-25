@@ -18,6 +18,8 @@ const props = defineProps({
     exists: Boolean,
     search_item: String,
     filter_item: String,
+    currency_types: Object,
+    tax_types: Object,
 })
 
 const modal_open = ref(false);
@@ -204,6 +206,7 @@ function all_check_fn(event){
                                         <th scope="col" class="px-6 py-3">Business Type</th>
                                         <th scope="col" class="px-6 py-3">Email</th>
                                         <th scope="col" class="px-6 py-3">Phone</th>
+                                        <th scope="col" class="px-6 py-3">Currency Type</th>
                                         <th scope="col" class="px-6 py-3">Actions</th>
                                     </tr>
                                 </thead>
@@ -220,6 +223,7 @@ function all_check_fn(event){
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ business.business_type ? business.business_type.name : '-' }}</th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ business.email }}</th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ business.phone }}</th>
+                                        <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ business.currency_type.name }}</th>
                                         <td class="px-6 py-3 flex items-center gap-2 justify-center">
                                             <button @click="_modal_open('edit', business)" class="text-yellow-400 hover:text-yellow-800 rounded-lg focus:outline-none dark:text-yellow-400 dark:hover:text-yellow-100" type="button">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -243,7 +247,7 @@ function all_check_fn(event){
             </div>
         </section>
         <ModalTransition>
-            <CreateUpdateModal v-if="modal_open" @modal_close="modal_close" :state="state" :business="business" :business_types="business_types"/>
+            <CreateUpdateModal v-if="modal_open" @modal_close="modal_close" :state="state" :business="business" :business_types="business_types" :currency_types="currency_types" :tax_types="tax_types"/>
             <ConfirmModal v-if="confirm_modal_open" @modal_close="confirm_modal_close" @delete="business_del(business.id)" />
         </ModalTransition>
     </AuthenticatedLayout>

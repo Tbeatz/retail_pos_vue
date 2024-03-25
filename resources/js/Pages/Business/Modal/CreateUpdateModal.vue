@@ -11,6 +11,8 @@ import { useForm } from '@inertiajs/vue3';
         state: String,
         business: Object,
         business_types: Object,
+        currency_types: Object,
+        tax_types: Object,
     })
 
     const emit = defineEmits(['modal_close']);
@@ -21,6 +23,8 @@ import { useForm } from '@inertiajs/vue3';
         address : props.business ? props.business.address : '',
         email : props.business ? props.business.email : '',
         phone : props.business ? props.business.phone : '',
+        currency_type_id: props.business ? (props.business.currency_type_id ? props.business.currency_type_id : '') : '',
+        tax_type_id: props.business ? (props.business.tax_type_id ? props.business.tax_type_id : '') : '',
     })
     
     function submit(state, id){
@@ -52,7 +56,7 @@ import { useForm } from '@inertiajs/vue3';
                 </div>
                 <form class="p-4 md:p-5" @submit.prevent="submit(state, business ? business.id : null)">
                     <div class="grid gap-4 mb-4 grid-cols-2">
-                        <div class="col-span-2">
+                        <div class="col-span-1">
                             <div class="flex items-center gap-1">
                                 <InputLabel for="name" value="Name" />
                                 <ValidateTransition>
@@ -69,7 +73,24 @@ import { useForm } from '@inertiajs/vue3';
                                 required
                             />
                         </div>
-                        <div class="col-span-2">
+                        <div class="col-span-1">
+                            <div class="flex items-center gap-1">
+                                <InputLabel for="tax_type_id" value="Tax Type" />
+                                <ValidateTransition>
+                                    <InputError :message="form.errors.tax_type_id" />
+                                </ValidateTransition>
+                            </div>
+                            <SelectInput
+                                id="tax_type_id"
+                                @input="form.clearErrors('tax_type_id')"
+                                v-model="form.tax_type_id"
+                                :value="tax_types"
+                                nameProp="name"
+                                required
+                                autocomplete="tax_type_id"
+                            />
+                        </div>
+                        <div class="col-span-1">
                             <div class="flex items-center gap-1">
                                 <InputLabel for="business_type_id" value="Business Type" />
                                 <ValidateTransition>
@@ -84,6 +105,23 @@ import { useForm } from '@inertiajs/vue3';
                                 nameProp="name"
                                 required
                                 autocomplete="business_type_id"
+                            />
+                        </div>
+                        <div class="col-span-1">
+                            <div class="flex items-center gap-1">
+                                <InputLabel for="currency_type_id" value="Currency Type" />
+                                <ValidateTransition>
+                                    <InputError :message="form.errors.currency_type_id" />
+                                </ValidateTransition>
+                            </div>
+                            <SelectInput
+                                id="currency_type_id"
+                                @input="form.clearErrors('currency_type_id')"
+                                v-model="form.currency_type_id"
+                                :value="currency_types"
+                                nameProp="name"
+                                required
+                                autocomplete="currency_type_id"
                             />
                         </div>
                         <div class="col-span-2">

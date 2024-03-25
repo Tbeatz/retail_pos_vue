@@ -14,7 +14,11 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::when($request->search_item, function($q, $v){
+        $roles = tenant()
+        ? Role::whereNot('id', 1)->when($request->search_item, function($q, $v){
+            return $q->where('name', 'LIKE', '%'. $v .'%');
+        })->paginate(10) :
+        Role::where('id', 1)->when($request->search_item, function($q, $v){
             return $q->where('name', 'LIKE', '%'. $v .'%');
         })->paginate(10);
         return Inertia::render('Role/Role', [
@@ -72,7 +76,7 @@ class RoleController extends Controller
     public function destroy($role, Request $request)
     {
         if ($role == 'all') {
-            Role::query()->delete();
+            Role::whereNotIn('id', [1,2,3])->delete();
         } else {
             $search_id = $role == 'param' ? $request->selected_ids : [$role];
             Role::whereIn('id', $search_id)->delete();

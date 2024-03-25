@@ -23,8 +23,6 @@ class ProductController extends Controller
         $businesses = Business::get();
         $units = Unit::get();
         $categories = Category::get();
-        $discount_types = DiscountType::get();
-        $currency_types = CurrencyType::get();
         
         $products = Product::when($request->search_item, function($q, $v){
                             return $q->where('name', 'LIKE', '%'. $v .'%');
@@ -32,7 +30,7 @@ class ProductController extends Controller
                             return $q->where('business_id', $v);
                         })->when($request->filter_category, function($q, $v){
                             return $q->where('category_id', $v);
-                        })->with(['category', 'unit', 'business', 'discount_type', 'currency_type', 'user'])
+                        })->with(['category', 'unit', 'business.currency_type', 'user'])
                         ->paginate(10);
 
         return Inertia::render('Product/Product', [
@@ -40,8 +38,6 @@ class ProductController extends Controller
             'businesses' => $businesses,
             'units' => $units,
             'categories' => $categories,
-            'discount_types' => $discount_types,
-            'currency_types' => $currency_types,
             'search_item' => $request->search_item,
             'filter_category' => $request->filter_category ?? '',
             'filter_business' => $request->filter_business ?? '',

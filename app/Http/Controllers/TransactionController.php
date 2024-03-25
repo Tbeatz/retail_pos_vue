@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TransactionRequest;
+use App\Models\Invoice;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -50,9 +52,19 @@ class TransactionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Transaction $transaction)
+    public function update(TransactionRequest $request, Transaction $transaction)
     {
-        //
+        $validatedData = $request->validated();
+        $validatedData['user_id'] = auth()->user()->id;
+        $validatedData['business_id'] = auth()->user()->business->id;
+        $transaction->update($validatedData);
+        Invoice::create([
+            'transaction_id' => $transaction->id,
+            'invoice_status_id' => 2, //paid
+            'invoice_type_id' => 1, //customer
+            'business_id' => auth()->user()->business->id,
+        ]);
+        return to_route('sale.index')->with('message', 'Transaction Success!');
     }
 
     /**

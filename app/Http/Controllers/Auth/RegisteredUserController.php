@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Business;
 use App\Models\CurrencyType;
 use App\Models\Position;
+use App\Models\Role;
 use App\Models\Tenant;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -25,7 +27,9 @@ class RegisteredUserController extends Controller
     public function create(): Response
     {
         return Inertia::render('Auth/Register', [
-            'positions' => Position::all(),
+            'positions' => Position::whereNot('id', 1)->get(),
+            'roles' => tenant() ? Role::whereNot('id', 1)->get() : Role::where('id', 1)->get(),
+            'businesses' => tenant() ? Business::get() : [],
         ]);
     }
 
@@ -36,55 +40,29 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $tenant_id = tenant('id');
-        if($tenant_id){
-            $user = Tenant::find($tenant_id)->run(function() use($request){
-                $request->validate([
-                    'name' => 'required|string|max:255',
-                    'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-                    'password' => ['required', 'confirmed', 'min:8'], //Rules\Password::defaults()
-                    'address' => 'required|string',
-                    'phone' => 'required',
-                    'position_id' => 'required',
-                ],[
-                    'password.confirmed' => 'Confirmation does not match.',
-                    'password.min' => 'Must be at least :min characters.',
-                ]);
-        
-                $user = User::create([
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'address' => $request->address,
-                    'phone' => $request->phone,
-                    'position_id' => $request->position_id,
-                    'role_id' => 2, //user
-                    'password' => Hash::make($request->password),
-                ]);
-                return $user;
-            });
-        } else {
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-                'password' => ['required', 'confirmed', 'min:8'], //Rules\Password::defaults()
-                'address' => 'required|string',
-                'phone' => 'required',
-                'position_id' => 'required',
-            ],[
-                'password.confirmed' => 'Confirmation does not match.',
-                'password.min' => 'Must be at least :min characters.',
-            ]);
-    
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'address' => $request->address,
-                'phone' => $request->phone,
-                'position_id' => $request->position_id,
-                'role_id' => 2, //user
-                'password' => Hash::make($request->password),
-            ]);
-        }
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'password' => ['required', 'confirmed', 'min:8'], //Rules\Password::defaults()
+            'address' => 'required|string',
+            'phone' => 'required',
+            'position_id' => 'required',
+            'role_id' => 'required',
+            'business_id' => tenant() ? 'required' : '',
+        ],[
+            'password.confirmed' => 'Confirmation does not match.',
+            'password.min' => 'Must be at least :min characters.',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'position_id' => $request->position_id,
+            'role_id' => 2, //user
+            'password' => Hash::make($request->password),
+        ]);
 
         event(new Registered($user));
 

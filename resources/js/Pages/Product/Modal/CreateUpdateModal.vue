@@ -15,8 +15,6 @@ import { ref } from 'vue';
         businesses: Object,
         units: Object,
         categories: Object,
-        discount_types: Object,
-        currency_types: Object,
     })
 
     const emit = defineEmits(['modal_close']);
@@ -33,9 +31,7 @@ import { ref } from 'vue';
         instock_qty : props.product ? props.product.instock_qty : 0,
         restock_qty : props.product ? props.product.restock_qty : 0,
         business_id : props.product ? (props.product.business_id ? props.product.business_id : '') : '',
-        discount_type_id : props.product ? (props.product.discount_type_id ? props.product.discount_type_id : '') : '',
-        discount_price : props.product ? props.product.discount_price : '',
-        currency_type_id : props.product ? (props.product.currency_type_id ? props.product.currency_type_id : '') : '',
+        discount_price : props.product ? props.product.discount_price : 0,
     })
     
     function submit(state, id){
@@ -220,7 +216,7 @@ import { ref } from 'vue';
                                 required
                             />
                         </div>
-                        <div class="col-span-1">
+                        <div class="col-span-2">
                             <div class="flex items-center gap-1">
                                 <InputLabel for="business_id" value="Business" />
                                 <ValidateTransition>
@@ -239,22 +235,6 @@ import { ref } from 'vue';
                         </div>
                         <div class="col-span-1">
                             <div class="flex items-center gap-1">
-                                <InputLabel for="discount_type_id" value="Discount Types" />
-                                <ValidateTransition>
-                                    <InputError :message="form.errors.discount_type_id" />
-                                </ValidateTransition>
-                            </div>
-                            <SelectInput
-                                id="discount_type_id"
-                                @input="form.clearErrors('discount_type_id')"
-                                v-model="form.discount_type_id"
-                                :value="discount_types"
-                                nameProp="name"
-                                autocomplete="discount_type_id"
-                            />
-                        </div>
-                        <div class="col-span-1">
-                            <div class="flex items-center gap-1">
                                 <InputLabel for="discount_price" value="Discount Price" />
                                 <ValidateTransition>
                                     <InputError :message="form.errors.discount_price" />
@@ -267,24 +247,6 @@ import { ref } from 'vue';
                                 class="mt-1 block w-full"
                                 placeholder="Price"
                                 @input="form.clearErrors('discount_price')"
-                            />
-                        </div>
-                        <div class="col-span-1">
-                            <div class="flex items-center gap-1">
-                                <InputLabel for="currency_type_id" value="Currency" />
-                                <ValidateTransition>
-                                    <InputError :message="form.errors.currency_type_id" />
-                                </ValidateTransition>
-                            </div>
-                            <SelectInput
-                                id="currency_type_id"
-                                @input="form.clearErrors('currency_type_id')"
-                                v-model="form.currency_type_id"
-                                :value="currency_types"
-                                nameProp="name"
-                                default_option="Choose..."
-                                required
-                                autocomplete="currency_type_id"
                             />
                         </div>
                     </div>

@@ -23,6 +23,7 @@ class DiscountTypeRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'discount_rate' => 'required',
         ];
     }
 }

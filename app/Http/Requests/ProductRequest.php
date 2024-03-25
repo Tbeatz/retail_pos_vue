@@ -32,9 +32,7 @@ class ProductRequest extends FormRequest
             'instock_qty' => 'required',
             'restock_qty' => 'required',
             'business_id' => 'required',
-            'discount_type_id' => '',
             'discount_price' => '',
-            'currency_type_id' => 'required',
             'user_id' => '',
             'image' => $image_rule,
         ];

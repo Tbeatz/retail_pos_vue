@@ -7,13 +7,15 @@ use App\Http\Controllers\PositionController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\InvoiceTypeController;
 use App\Http\Controllers\InvoiceStatusController;
-use App\Http\Controllers\DiscountTypeController;
 use App\Http\Controllers\TaxTypeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CurrencyTypeController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\UserController;
@@ -43,10 +45,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     //Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -68,25 +66,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('role', RoleController::class);
     Route::resource('tenant', TenantController::class);
     Route::resource('user', UserController::class);
-    //(Business)
-    Route::resource('business_type', BusinessTypeController::class);
-    Route::resource('business', BusinessController::class);
+    Route::resource('reg_user', RegisterUserController::class);
     Route::resource('position', PositionController::class);
-    //(Financial)
-    Route::resource('payment_method', PaymentMethodController::class);
-    Route::resource('invoice_type', InvoiceTypeController::class);
-    Route::resource('invoice_status', InvoiceStatusController::class);
-    Route::resource('discount_type', DiscountTypeController::class);
-    Route::resource('tax_type', TaxTypeController::class);
-    //(Product Category)
-    Route::resource('category', CategoryController::class);
-    //(Miscellaneous)
-    Route::resource('currency_type', CurrencyTypeController::class);
-    Route::resource('unit', UnitController::class);
-
-    //Side Tabs
-    Route::resource('product', ProductController::class);
-    Route::resource('sale', SaleController::class);
 });
 
 require __DIR__.'/auth.php';

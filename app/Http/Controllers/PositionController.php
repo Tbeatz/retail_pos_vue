@@ -14,13 +14,13 @@ class PositionController extends Controller
      */
     public function index(Request $request)
     {
-        $positions = Position::when($request->search_item, function($q, $v){
+        $positions = Position::whereNot('id', 1)->when($request->search_item, function($q, $v){
             return $q->where('name', 'LIKE', '%'. $v .'%');
         })->paginate(10);
         return Inertia::render('Position/Position', [
             'positions' => $positions,
             'search_item' => $request->search_item,
-            'exists' => Position::exists(),
+            'exists' => Position::count() > 1,
         ]);
     }
 
@@ -72,7 +72,7 @@ class PositionController extends Controller
     public function destroy($position, Request $request)
     {
         if ($position == 'all') {
-            Position::query()->delete();
+            Position::whereNot('id', 1)->delete();
         } else {
             $search_id = $position == 'param' ? $request->selected_ids : [$position];
             Position::whereIn('id', $search_id)->delete();

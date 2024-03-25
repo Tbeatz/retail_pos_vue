@@ -20,8 +20,10 @@ return new class extends Migration
             $table->foreignIdFor(Business::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(PaymentMethod::class)->nullable()->constrained()->nullOnDelete();
+            $table->string('total_tax_amount')->default(0);
             $table->string('total_amount')->default(0);
-            $table->foreignIdFor(CurrencyType::class)->nullable()->constrained()->nullOnDelete();
+            $table->string('received_amount')->default(0);
+            $table->string('change')->nullable()->default(0);
             $table->timestamps();
         });
     }

@@ -38,6 +38,7 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'message' => session('message'),
                 'register_success' => session('register_success'),
+                'transaction_id' => session('transaction_id'),
             ]
         ];
     }

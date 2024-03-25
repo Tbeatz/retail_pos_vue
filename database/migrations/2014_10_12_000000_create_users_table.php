@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->boolean('approve')->default(false);
             $table->foreignIdFor(Role::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Position::class)->nullable()->constrained()->nullOnDelete();
-            $table->foreignIdFor(Business::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(Position::class)->nullable()->constrained()->cascadeOnDelete();
+            // $table->foreignIdFor(Business::class)->nullable()->constrained()->nullOnDelete();
             $table->rememberToken();
             $table->timestamps();
         });

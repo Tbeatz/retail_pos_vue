@@ -19,27 +19,44 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::all();
-        $businesses = Business::all();
+        $roles = tenant() ? Role::whereNot('id', 1)->get() : Role::where('id', 1)->get();
         $positions = Position::whereNot('id', 1)->get();
-
-        $users = User::where('approve', true)->where('position_id', '!=', 1)
-        ->when($request->search_item, function($q, $v){
-            return $q->where('name', 'LIKE', '%'. $v .'%')
-                    ->orWhere('phone', 'LIKE', '%' . $v .'%')
-                    ->orWhere('email', 'LIKE', '%' . $v . '%')
-                    ->where('approve', true)->where('position_id', '!=', 1);
-        })
-        ->when($request->filter_business, function($q, $v){
-            return $q->where('business_id', $v);
-        })
-        ->when($request->filter_role, function($q, $v){
-            return $q->where('role_id', $v);
-        })
-        ->when($request->filter_position, function($q, $v){
-            return $q->where('position_id', $v);
-        })
-        ->with(['role', 'position', 'business'])->paginate(10);
+        if(auth()->user()->role_id == 1 && auth()->user()->position_id == 1) {
+            $businesses = null;
+            $users = User::where('approve', true)->where('position_id', '!=', 1)
+            ->when($request->search_item, function($q, $v){
+                return $q->where('name', 'LIKE', '%'. $v .'%')
+                        ->orWhere('phone', 'LIKE', '%' . $v .'%')
+                        ->orWhere('email', 'LIKE', '%' . $v . '%')
+                        ->where('approve', true)->where('position_id', '!=', 1);
+            })
+            ->when($request->filter_role, function($q, $v){
+                return $q->where('role_id', $v);
+            })
+            ->when($request->filter_position, function($q, $v){
+                return $q->where('position_id', $v);
+            })
+            ->with(['role', 'position'])->paginate(10);
+        } else {
+            $businesses = Business::all();
+            $users = User::where('approve', true)->where('position_id', '!=', 1)
+            ->when($request->search_item, function($q, $v){
+                return $q->where('name', 'LIKE', '%'. $v .'%')
+                        ->orWhere('phone', 'LIKE', '%' . $v .'%')
+                        ->orWhere('email', 'LIKE', '%' . $v . '%')
+                        ->where('approve', true)->where('position_id', '!=', 1);
+            })
+            ->when($request->filter_business, function($q, $v){
+                return $q->where('business_id', $v);
+            })
+            ->when($request->filter_role, function($q, $v){
+                return $q->where('role_id', $v);
+            })
+            ->when($request->filter_position, function($q, $v){
+                return $q->where('position_id', $v);
+            })
+            ->with(['role', 'position', 'business'])->paginate(10);
+        }
 
         return Inertia::render('User/User', [
             'users' => $users,
@@ -123,7 +140,7 @@ class UserController extends Controller
     public function destroy($user, Request $request)
     {
         if ($user == 'all') {
-            User::whereNot('position_id', 1)->each(function ($user) {
+            User::whereNot('role_id', 1)->whereNot('position_id', 1)->each(function ($user) {
                 if ($user->avatar) {
                     Storage::disk('upload')->delete($user->avatar);
                 }

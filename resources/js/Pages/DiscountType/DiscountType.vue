@@ -188,6 +188,7 @@ function all_check_fn(event){
                                         </th>
                                         <th scope="col" class="px-6 py-3">ID</th>
                                         <th scope="col" class="px-6 py-3">Name</th>
+                                        <th scope="col" class="px-6 py-3">Discount Rate</th>
                                         <th scope="col" class="px-6 py-3">Actions</th>
                                     </tr>
                                 </thead>
@@ -201,6 +202,7 @@ function all_check_fn(event){
                                         </td>
                                         <td scope="row" class="px-6 py-3">{{ index + 1 }}</td>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ discount_type.name }}</th>
+                                        <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ discount_type.discount_rate}} %</th>
                                         <td class="px-6 py-3 flex items-center gap-2 justify-center">
                                             <button @click="_modal_open('edit', discount_type)" class="text-yellow-400 hover:text-yellow-800 rounded-lg focus:outline-none dark:text-yellow-400 dark:hover:text-yellow-100" type="button">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">

@@ -14,6 +14,7 @@ import { useForm } from '@inertiajs/vue3';
 
     const form = useForm({
         name : props.discount_type ? props.discount_type.name : '',
+        discount_rate: props.discount_type ? props.discount_type.discount_rate : '',
     })
 
     function submit(state, id){
@@ -59,6 +60,23 @@ import { useForm } from '@inertiajs/vue3';
                                 class="mt-1 block w-full"
                                 placeholder="Type discount type name"
                                 @input="form.clearErrors('name')"
+                                required
+                            />
+                        </div>
+                        <div class="col-span-2">
+                            <div class="flex items-center gap-1">
+                                <InputLabel for="discount_rate" value="Discount Rate (%)" />
+                                <ValidateTransition>
+                                    <InputError :message="form.errors.discount_rate" />
+                                </ValidateTransition>
+                            </div>
+                            <TextInput
+                                type="number"
+                                id="discount_rate"
+                                v-model="form.discount_rate"
+                                class="mt-1 block w-full"
+                                placeholder="Type discount rate"
+                                @input="form.clearErrors('discount_rate')"
                                 required
                             />
                         </div>

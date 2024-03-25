@@ -5,9 +5,9 @@ import SelectInput from '@/Components/SelectInput.vue';
 import TextInput from '@/Components/TextInput.vue';
 import TextareaInput from '@/Components/TextareaInput.vue';
 import ValidateTransition from '@/Transitions/ValidateTransition.vue';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
-    
+
     const preview_url = ref('');
 
     const props = defineProps({
@@ -17,6 +17,8 @@ import { ref } from 'vue';
         businesses: Object,
         positions: Object,
     })
+
+    const page = usePage();
 
     const emit = defineEmits(['modal_close']);
 
@@ -28,7 +30,7 @@ import { ref } from 'vue';
         phone : props.user ? props.user.phone : '',
         address : props.user ? props.user.address : '',
         password : '',
-        role_id : props.user ? props.user.role_id : '',
+        role_id : (page.props.auth.user.role_id == 1 && page.props.auth.user.position_id == 1) ? 1 : (props.user ? props.user.role_id : ''),
         business_id : props.user ? (props.user.business_id ? props.user.business_id : '') : '',
         position_id : props.user ? (props.user.position_id ? props.user.position_id : '') : '',
         state: props.state,
@@ -163,7 +165,7 @@ import { ref } from 'vue';
                                 autocomplete="position_id"
                             />
                         </div>
-                        <div class="col-span-1">
+                        <div class="col-span-1" v-if="$page.props.auth.user.role_id != 1">
                             <div class="flex items-center gap-1">
                                 <InputLabel for="business_id" value="Business" />
                                 <ValidateTransition>

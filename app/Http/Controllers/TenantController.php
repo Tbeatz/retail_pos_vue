@@ -26,7 +26,7 @@ class TenantController extends Controller
                                     return $q->where('domain', 'LIKE', '%'. $v .'%');
                                 });
                     })->with('domains')->paginate(10);
-                    
+
         return Inertia::render('Tenant/Tenant', [
             'tenants' => $tenants,
             'search_item' => $request->search_item,
@@ -62,8 +62,8 @@ class TenantController extends Controller
                 'email' => $t->email,
                 'password' => Hash::make($t->password),
                 'approve' => true,
-                'role_id' => 1, //Admin
-                'position_id' => 2, //Super admin
+                'role_id' => 2, //Admin
+                'position_id' => 1, //Super admin
             ]);
         });
 
@@ -96,9 +96,9 @@ class TenantController extends Controller
         $tenant->domains()->update([
             'domain' => $validatedData['domain'],
         ]);
-        
+
         $tenant->update($request->validated());
-        
+
         $tenant->run(function($t){
             $user = User::where('role_id', 1)->update([
                 'name' => $t->name,

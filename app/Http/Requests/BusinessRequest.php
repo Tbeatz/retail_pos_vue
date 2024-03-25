@@ -27,6 +27,8 @@ class BusinessRequest extends FormRequest
             'address' => 'required|string',
             'email' => 'required|email',
             'phone' => 'required|string',
+            'currency_type_id' => 'required',
+            'tax_type_id' => 'required',
         ];
     }
 }

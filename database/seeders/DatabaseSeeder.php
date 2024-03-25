@@ -14,8 +14,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             BusinessTypeSeeder::class,
-            RoleSeeder::class,
-            PositionSeeder::class,
             BusinessSeeder::class,
             PaymentMethodSeeder::class,
             UnitSeeder::class,
@@ -25,6 +23,8 @@ class DatabaseSeeder extends Seeder
             TaxTypeSeeder::class,
             CategorySeeder::class,
             CurrencyTypeSeeder::class,
+            RoleSeeder::class,
+            PositionSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 

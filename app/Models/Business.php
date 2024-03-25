@@ -12,4 +12,12 @@ class Business extends Model
     public function business_type(){
         return $this->belongsTo(BusinessType::class);
     }
+
+    public function currency_type(){
+        return $this->belongsTo(CurrencyType::class);
+    }
+
+    public function tax_type(){
+        return $this->belongsTo(TaxType::class);
+    }
 }

@@ -67,8 +67,8 @@ function position_del(id){
         };
         var url_param = id;
     } else {
-        var request_data = Array.isArray(id) 
-            ? { 
+        var request_data = Array.isArray(id)
+            ? {
                 data: { selected_ids: id },
                 onSuccess: () => {
                     confirm_modal_close();

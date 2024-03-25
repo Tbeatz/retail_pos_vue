@@ -33,7 +33,7 @@ class UserRequest extends FormRequest
             'avatar' => $avatar_rule,
             'password' => $password_rule,
             'position_id' => 'required',
-            'business_id' => '',
+            tenant() ? 'business_id' : '' => tenant() ? 'required' : '',
             'role_id' => 'required',
         ];
     }

@@ -15,6 +15,8 @@ const form = useForm({
     phone: '',
     address: '',
     position_id : '',
+    business_id : '',
+    role_id : '',
     password: '',
     password_confirmation: '',
 });
@@ -23,6 +25,8 @@ const page = usePage();
 
 defineProps({
     positions : Array,
+    roles : Array,
+    businesses: Array,
 });
 
 const submit = () => {
@@ -134,22 +138,53 @@ const submit = () => {
                         />
                     </div>
                 </div>
-
-                <div class="mt-4">
-                    <div class="flex items-center gap-1">
-                        <InputLabel for="position_id" value="Position" />
-                        <ValidateTransition>
-                            <InputError :message="form.errors.position_id" />
-                        </ValidateTransition>
+                <div class="flex flex-row gap-2">
+                    <div class="mt-4 w-1/2">
+                        <div class="flex items-center gap-1">
+                            <InputLabel for="role_id" value="Role" />
+                            <ValidateTransition>
+                                <InputError :message="form.errors.role_id" />
+                            </ValidateTransition>
+                        </div>
+                        <SelectInput
+                            v-model="form.role_id"
+                            @change="form.clearErrors('role_id')"
+                            required
+                            id="role_id"
+                            :value="roles"
+                            nameProp="name"/>
                     </div>
-                    <SelectInput
-                        v-model="form.position_id"
-                        @change="form.clearErrors('position_id')"
-                        required
-                        id="position_id"
-                        :value="positions"
-                        nameProp="name"/>
+                    <div class="mt-4 w-1/2">
+                        <div class="flex items-center gap-1">
+                            <InputLabel for="position_id" value="Position" />
+                            <ValidateTransition>
+                                <InputError :message="form.errors.position_id" />
+                            </ValidateTransition>
+                        </div>
+                        <SelectInput
+                            v-model="form.position_id"
+                            @change="form.clearErrors('position_id')"
+                            required
+                            id="position_id"
+                            :value="positions"
+                            nameProp="name"/>
+                    </div>
                 </div>
+                <div v-if="$page.props.auth.tenant" class="mt-4">
+                        <div class="flex items-center gap-1">
+                            <InputLabel for="business_id" value="Business" />
+                            <ValidateTransition>
+                                <InputError :message="form.errors.business_id" />
+                            </ValidateTransition>
+                        </div>
+                        <SelectInput
+                            v-model="form.business_id"
+                            @change="form.clearErrors('business_id')"
+                            required
+                            id="business_id"
+                            :value="businesses"
+                            nameProp="name"/>
+                    </div>
                 <div class="flex flex-row gap-2 mt-4 mb-4">
                     <div class="w-1/2">
                         <div class="flex items-center gap-1">

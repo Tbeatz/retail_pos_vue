@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BusinessRequest;
 use App\Models\Business;
 use App\Models\BusinessType;
+use App\Models\CurrencyType;
+use App\Models\TaxType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -21,13 +23,15 @@ class BusinessController extends Controller
                         return $q->where('name', 'LIKE', '%'. $v .'%');
                     })->when($request->filter_item, function($q, $v){
                         return $q->where('business_type_id', $v);
-                    })->with('business_type')->paginate(10);
+                    })->with(['business_type', 'currency_type'])->paginate(10);
 
         return Inertia::render('Business/Business', [
             'businesses' => $businesses,
             'business_types' => $business_types,
             'filter_item' => $request->filter_item ?? '',
             'search_item' => $request->search_item,
+            'currency_types' => CurrencyType::all(),
+            'tax_types' => TaxType::all(),
             'exists' => Business::exists(),
         ]);
     }

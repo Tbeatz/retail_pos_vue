@@ -77,8 +77,8 @@ function user_del(id){
         };
         var url_param = id;
     } else {
-        var request_data = Array.isArray(id) 
-            ? { 
+        var request_data = Array.isArray(id)
+            ? {
                 data: { selected_ids: id },
                 onSuccess: () => {
                     confirm_modal_close();
@@ -170,7 +170,7 @@ function all_check_fn(event){
                                         </div>
                                         <input type="text" v-model="search" id="user_search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search">
                                     </div>
-                                    <div class="relative w-1/4">
+                                    <div v-if="$page.props.auth.user.role_id != 1" class="relative w-1/4">
                                         <SelectInput
                                             id="business_id"
                                             v-model="filter_business"
@@ -179,7 +179,7 @@ function all_check_fn(event){
                                             default_option="Filter Business"
                                         />
                                     </div>
-                                    <div class="relative w-1/4">
+                                    <div v-if="$page.props.auth.user.role_id != 1 && $page.props.auth.user.position_id != 1" class="relative w-1/4">
                                         <SelectInput
                                             id="role_id"
                                             v-model="filter_role"
@@ -233,7 +233,7 @@ function all_check_fn(event){
                                         <th scope="col" class="px-6 py-3">Phone No</th>
                                         <th scope="col" class="px-6 py-3">Role</th>
                                         <th scope="col" class="px-6 py-3">Position</th>
-                                        <th scope="col" class="px-6 py-3">Business</th>
+                                        <th v-if="$page.props.auth.user.role_id != 1" scope="col" class="px-6 py-3">Business</th>
                                         <th scope="col" class="px-6 py-3">Actions</th>
                                     </tr>
                                 </thead>
@@ -247,14 +247,14 @@ function all_check_fn(event){
                                         </td>
                                         <td scope="row" class="px-6 py-3">{{ index + 1 }}</td>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img class="w-14 h-14 rounded-full shadow-md dark:shadow-blue-600 shadow-blue-500" :src="user.avatar ? 'file/' + user.avatar : 'style_images/user.png'" alt="">        
+                                            <img class="w-14 h-14 rounded-full shadow-md dark:shadow-blue-600 shadow-blue-500" :src="user.avatar ? 'file/' + user.avatar : 'style_images/user.png'" alt="">
                                         </th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ user.name }}</th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ user.email }}</th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ user.phone }}</th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ user.role.name }}</th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ user.position.name }}</th>
-                                        <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ user.business ? user.business.name : '-' }}</th>
+                                        <th v-if="$page.props.auth.user.role_id != 1" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ user.business ? user.business.name : '-' }}</th>
                                         <td class="px-6 py-3">
                                             <button @click="_modal_open('edit', user)" class="text-yellow-400 hover:text-yellow-800 rounded-lg focus:outline-none dark:text-yellow-400 dark:hover:text-yellow-100 mr-1" type="button">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
