@@ -76,8 +76,8 @@ function product_del(id){
         };
         var url_param = id;
     } else {
-        var request_data = Array.isArray(id) 
-            ? { 
+        var request_data = Array.isArray(id)
+            ? {
                 data: { selected_ids: id },
                 onSuccess: () => {
                     confirm_modal_close();
@@ -176,7 +176,7 @@ function all_check_fn(event){
                                             default_option="Filter Product Category"
                                         />
                                     </div>
-                                    <div class="relative w-1/3">
+                                    <div class="relative w-1/3" v-if="!$page.props.auth.user.business_id">
                                         <SelectInput
                                             id="business_id"
                                             v-model="filter_business"
@@ -235,7 +235,7 @@ function all_check_fn(event){
                                         </td>
                                         <td scope="row" class="px-6 py-3">{{ index + 1 }}</td>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center justify-center">
-                                            <img class="w-14 h-14 rounded-full shadow-md dark:shadow-blue-600 shadow-blue-500" :src="_product.image ? 'file/' + _product.image : 'style_images/product.png'" alt="">    
+                                            <img class="w-14 h-14 rounded-full shadow-md dark:shadow-blue-600 shadow-blue-500" :src="_product.image ? 'file/' + _product.image : 'style_images/product.png'" alt="">
                                         </th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ _product.name }}</th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ _product.category.name }}</th>
@@ -266,9 +266,9 @@ function all_check_fn(event){
             </div>
         </section>
         <ModalTransition>
-            <CreateUpdateModal v-if="modal_open" 
-                @modal_close="modal_close" 
-                :state="state" 
+            <CreateUpdateModal v-if="modal_open"
+                @modal_close="modal_close"
+                :state="state"
                 :product="product"
                 :businesses="businesses"
                 :units="units"

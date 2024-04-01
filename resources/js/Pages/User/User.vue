@@ -247,7 +247,7 @@ function all_check_fn(event){
                                         </td>
                                         <td scope="row" class="px-6 py-3">{{ index + 1 }}</td>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img class="w-14 h-14 rounded-full shadow-md dark:shadow-blue-600 shadow-blue-500" :src="user.avatar ? 'file/' + user.avatar : 'style_images/user.png'" alt="">
+                                            <img class="w-14 h-14 rounded-full shadow-md dark:shadow-blue-600 shadow-blue-500 mx-auto" :src="user.avatar ? 'file/' + user.avatar : 'style_images/user.png'" alt="">
                                         </th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ user.name }}</th>
                                         <th class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ user.email }}</th>

@@ -37,7 +37,7 @@ import { ref } from 'vue';
                     <p class="font-semibold text-purple-500 dark:text-purple-600">Price</p>
                 </div>
                 <button class="flex justify-between hover:bg-blue-100 dark:hover:bg-blue-900 w-full p-1 rounded-lg" v-for="sale in invoice.transaction.sales">
-                    <p class="text-gray-600 dark:text-gray-400 font-medium">{{ sale.product.name }} ({{ sale.quantity + 'x' }})</p>
+                    <p class="text-gray-600 dark:text-gray-400 font-medium">{{ sale.product_name }} ({{ sale.quantity + 'x' }})</p>
                     <p class="text-blue-500 dark:text-blue-600 font-medium">{{ sale.total_price }}</p>
                 </button>
             </div>

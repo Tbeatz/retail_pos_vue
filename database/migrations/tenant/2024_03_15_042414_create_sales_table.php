@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Transaction::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Product::class)->nullable()->constrained()->nullOnDelete();
+            $table->string('product_name');
             $table->string('quantity');
             $table->string('price');
             $table->string('total_price');

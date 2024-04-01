@@ -53,9 +53,11 @@ class SaleController extends Controller
     {
         $transaction = Transaction::create();
         foreach ($request->data as $data) {
+            $product = Product::where('id', $data['id'])->first();
             Sale::create([
                 'transaction_id' => $transaction->id,
                 'product_id' => $data['id'],
+                'product_name' => $product->name,
                 'quantity' => $data['quantity'],
                 'price' => $data['price'],
                 'total_price' => $data['total_price'],

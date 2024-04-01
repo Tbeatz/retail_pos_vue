@@ -13,15 +13,12 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
-        $invoices = Invoice::when($request->start_date, fn($query, $value) => $query->where('created_at', '>=', $value))
+        $invoices = Invoice::when(auth()->user()->business_id, fn($query, $value) => $query->where('business_id', $value))
+                            ->when($request->start_date, fn($query, $value) => $query->where('created_at', '>=', $value))
                             ->when($request->end_date, fn($query, $value) => $query->where('created_at', '<=', $value))
                             ->with(['transaction', 'transaction.payment_method', 'business.currency_type'])->paginate(10);
         return Inertia::render("Invoice/Invoice", [
-            'invoices' => auth()->user()->role_id == 2
-                        ? $invoices
-                        : Invoice::where('business_id', auth()->user()->business_id)->when($request->start_date, fn($query, $value) => $query->where('created_at', '>=', $value))
-                        ->when($request->end_date, fn($query, $value) => $query->where('created_at', '<=', $value))
-                        ->with(['transaction', 'transaction.payment_method', 'business.currency_type'])->paginate(10),
+            'invoices' => $invoices,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'exists' => auth()->user()->role_id == 2 ? Invoice::exists() : Invoice::where('business_id', auth()->user()->business_id)->exists(),

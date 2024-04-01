@@ -20,17 +20,15 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $businesses = Business::get();
+        $businesses = Business::when(auth()->user()->business_id, fn ($q, $v) => $q->where('id', $v))->get();
         $units = Unit::get();
         $categories = Category::get();
-        
-        $products = Product::when($request->search_item, function($q, $v){
-                            return $q->where('name', 'LIKE', '%'. $v .'%');
-                        })->when($request->filter_business, function($q, $v){
-                            return $q->where('business_id', $v);
-                        })->when($request->filter_category, function($q, $v){
-                            return $q->where('category_id', $v);
-                        })->with(['category', 'unit', 'business.currency_type', 'user'])
+
+        $products = Product::when($request->search_item, fn ($q, $v) => $q->where('name', 'LIKE', '%'. $v .'%'))
+                    ->when($request->filter_business, fn ($q, $v) => $q->where('business_id', $v))
+                    ->when($request->filter_category, fn ($q, $v) => $q->where('category_id', $v))
+                    ->when(auth()->user()->business_id, fn ($q, $v) => $q->where('business_id', $v))
+                    ->with(['category', 'unit', 'business.currency_type', 'user'])
                         ->paginate(10);
 
         return Inertia::render('Product/Product', [
@@ -113,7 +111,8 @@ class ProductController extends Controller
     public function destroy($product, Request $request)
     {
         if ($product == 'all') {
-            Product::query()->each(function ($product) {
+            Product::when(auth()->user()->business_id, fn($q, $v) => $q->where('business_id', $v))
+            ->each(function ($product) {
                 if ($product->image) {
                     Storage::disk('upload')->delete($product->image);
                 }

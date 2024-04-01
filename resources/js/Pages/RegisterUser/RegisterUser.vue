@@ -52,6 +52,9 @@ function user_del(id){
     router.delete(route('reg_user.destroy', id), {
         onSuccess: () => {
             confirm_modal_open.value = false;
+            setTimeout(() => {
+                page.props.flash.message = null;
+            }, 3000);
         }
     });
 }

@@ -5,10 +5,11 @@ import SelectInput from '@/Components/SelectInput.vue';
 import TextInput from '@/Components/TextInput.vue';
 import TextareaInput from '@/Components/TextareaInput.vue';
 import ValidateTransition from '@/Transitions/ValidateTransition.vue';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
     const preview_url = ref('');
+    const page = usePage();
     const props = defineProps({
         state: String,
         product: Object,
@@ -30,10 +31,10 @@ import { ref } from 'vue';
         price : props.product ? props.product.price : '',
         instock_qty : props.product ? props.product.instock_qty : 0,
         restock_qty : props.product ? props.product.restock_qty : 0,
-        business_id : props.product ? (props.product.business_id ? props.product.business_id : '') : '',
+        business_id : props.product ? (props.product.business_id ? props.product.business_id : '') : (page.props.auth.user.business_id ? page.props.auth.user.business_id : ''),
         discount_price : props.product ? props.product.discount_price : 0,
     })
-    
+
     function submit(state, id){
         state == 'create' ? form.post(route('product.store'), {
             onSuccess: () => {
